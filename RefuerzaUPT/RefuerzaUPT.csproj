@@ -144,6 +144,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Filters\AdminFilters.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -157,6 +158,7 @@
     <Compile Include="Models\ModeloCuestionario.cs" />
     <Compile Include="Models\Pregunta.cs" />
     <Compile Include="Models\Respuesta.cs" />
+    <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\Tema.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
     <Compile Include="Models\TipoUsuario.cs" />
@@ -188,7 +190,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Assets\" />
     <Folder Include="Controllers\" />
-    <Folder Include="Filters\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
   <ItemGroup>
