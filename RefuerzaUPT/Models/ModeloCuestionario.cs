@@ -21,7 +21,6 @@ namespace RefuerzaUPT.Models
         public virtual DbSet<MedallaUsuario> MedallaUsuario { get; set; }
         public virtual DbSet<Pregunta> Pregunta { get; set; }
         public virtual DbSet<Respuesta> Respuesta { get; set; }
-        public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<Tema> Tema { get; set; }
         public virtual DbSet<TipoPregunta> TipoPregunta { get; set; }
         public virtual DbSet<TipoUsuario> TipoUsuario { get; set; }

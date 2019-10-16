@@ -114,7 +114,6 @@
     <Compile Include="Models\ModeloCuestionario.cs" />
     <Compile Include="Models\Pregunta.cs" />
     <Compile Include="Models\Respuesta.cs" />
-    <Compile Include="Models\sysdiagrams.cs" />
     <Compile Include="Models\Tema.cs" />
     <Compile Include="Models\TipoPregunta.cs" />
     <Compile Include="Models\TipoUsuario.cs" />
