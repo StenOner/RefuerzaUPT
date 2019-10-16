@@ -1,0 +1,40 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Sistema Ventas MVC</title>
+    <!--Boostrap-->
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="container">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-lg navbar-light bg-light">
+            <a class="navbar-brand" href="#">RefuerzaUPT</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse"
+                    data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </nav>
+    </div>
+    <div class="container">
+        <h1 class="jumbotron">
+            RefuerzaUPT
+        </h1>
+        @RenderBody()
+    </div>
+    <!--JQuery-->
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+    <!--Boostrap-->
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <!--ResponseModel-->
+    <!--<script src="~/Scripts/ini.js"></script>-->
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</body>
+</html>
