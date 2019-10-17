@@ -193,6 +193,8 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
     <Content Include="Views\Cuestionario\Index.cshtml" />
+    <Content Include="Views\Cuestionario\Ver.cshtml" />
+    <Content Include="Views\Cuestionario\AgregarEditar.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

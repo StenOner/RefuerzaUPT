@@ -4,7 +4,9 @@ namespace RefuerzaUPT.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Cuestionario")]
     public partial class Cuestionario
@@ -45,5 +47,99 @@ namespace RefuerzaUPT.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuesta> Respuesta { get; set; }
+
+        public List<Cuestionario> Listar()
+        {
+            var objCuestionario = new List<Cuestionario>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    objCuestionario = db.Cuestionario.ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return objCuestionario;
+        }
+
+        public Cuestionario Obtener(int id)
+        {
+            var objCuestionario = new Cuestionario();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    objCuestionario = db.Cuestionario
+                        .Where(x => x.cuestionarioID == id)
+                        .SingleOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return objCuestionario;
+        }
+
+        public List<Cuestionario> ObtenerPorCurso(int id)
+        {
+            var objCuestionario = new List<Cuestionario>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    objCuestionario = db.Cuestionario.Include("Tema.Curso")
+                              .Where(x => x.Tema.Curso.cursoID == id)
+                              .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return objCuestionario;
+        }
+
+        public void Guardar()
+        {
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    if (this.cuestionarioID > 0)
+                    {
+                        db.Entry(this).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        db.Entry(this).State = EntityState.Added;
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public void Eliminar()
+        {
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    db.Entry(this).State = EntityState.Deleted;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
     }
 }
