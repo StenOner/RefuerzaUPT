@@ -5,6 +5,7 @@ namespace RefuerzaUPT.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Usuario")]
     public partial class Usuario
@@ -53,5 +54,41 @@ namespace RefuerzaUPT.Models
         public virtual ICollection<Respuesta> Respuesta { get; set; }
 
         public virtual TipoUsuario TipoUsuario { get; set; }
+
+        public ResponseModel ValidarLogin(string user, string password)
+        {
+            var rm = new ResponseModel();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    var usuario = db.Usuario
+                        .Where(x => x.nombre.Equals(user) &&
+                                x.clave.Equals(password)).SingleOrDefault();
+
+                    if (usuario != null)
+                    {
+                        if (usuario.estado)
+                        {
+                            SessionHelper.AddUserToSession(usuario.usuarioID.ToString());
+                            rm.SetResponse(true);
+                        }
+                        else
+                        {
+                            rm.SetResponse(false, "Usuario desactivado, comuniquese con el administrador.");
+                        }
+                    }
+                    else
+                    {
+                        rm.SetResponse(false, "Usuario o Contraseña incorrectos.");
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return rm;
+        }
     }
 }

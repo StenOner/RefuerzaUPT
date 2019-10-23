@@ -24,20 +24,32 @@ namespace RefuerzaUPT.Controllers
          * 
          * 
          */
-        public ActionResult Ver(int id)
+        public ActionResult Ver(int _id)
         {
-            return View(objCuestionario.Obtener(id));
+            return View(objCuestionario.Obtener(_id));
+        }
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+        public ActionResult ResolverCuestionario(int _id)
+        {
+
+            return View(objCuestionario.Obtener(_id));
         }
 
         /**
          *
          *
          */
-        public ActionResult AgregarEditar(int id)
+        public ActionResult AgregarEditar(int _id)
         {
             return View(
-                id == 0 ? new Cuestionario()
-                : objCuestionario.Obtener(id));
+                _id == 0 ? new Cuestionario()
+                : objCuestionario.Obtener(_id));
         }
 
         /**
@@ -46,16 +58,16 @@ namespace RefuerzaUPT.Controllers
          * 
          * 
          */
-        public ActionResult Guardar(Cuestionario cuestionario)
+        public ActionResult Guardar(Cuestionario _cuestionario)
         {
             if (ModelState.IsValid)
             {
-                cuestionario.Guardar();
+                _cuestionario.Guardar();
                 return Redirect("~/Cuestionario");
             }
             else
             {
-                return View("~/Views/Cuestionario/AgregarEditar.cshtml", cuestionario);
+                return View("~/Views/Cuestionario/AgregarEditar.cshtml", _cuestionario);
             }
         }
 
@@ -65,9 +77,9 @@ namespace RefuerzaUPT.Controllers
          * 
          * 
          */
-        public ActionResult Eliminar(int id)
+        public ActionResult Eliminar(int _id)
         {
-            objCuestionario.cuestionarioID = id;
+            objCuestionario.cuestionarioID = _id;
             objCuestionario.Eliminar();
             return Redirect("~/Cuestionario");
         }

@@ -1,0 +1,34 @@
+﻿
+@{
+    ViewBag.Title = "Login";
+}
+
+<div id="login">
+    <h1 class="page-header text-center">Login</h1>
+
+    <div class="row">
+        <div class="col-xs-2"></div>
+        <div class="col-xs-8">
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    @using (Html.BeginForm("Validar", "Login", FormMethod.Post))
+                    {
+                        <div class="form-group">
+                            <label>Usuario</label>
+                            <input type="email" name="Usuario" class="form-control" placeholder="Ingrese su correo" />
+                        </div>
+                        <div class="form-group">
+                            <label>Password</label>
+                            <input type="password" name="Password" class="form-control" placeholder="Ingrese su clave" />
+                        </div>
+                        <div class="text-right">
+                            <button data-ajax="true" type="submit" class="btn btn-primary">
+                                Ingresar
+                            </button>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

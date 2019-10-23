@@ -155,6 +155,7 @@
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CuestionarioController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Filters\AdminFilters.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -168,6 +169,7 @@
     <Compile Include="Models\MedallaUsuario.cs" />
     <Compile Include="Models\ModeloCuestionario.cs" />
     <Compile Include="Models\Pregunta.cs" />
+    <Compile Include="Models\ResponseModel.cs" />
     <Compile Include="Models\Respuesta.cs" />
     <Compile Include="Models\SessionHelper.cs" />
     <Compile Include="Models\Tema.cs" />
@@ -195,6 +197,7 @@
     <Content Include="Views\Cuestionario\Index.cshtml" />
     <Content Include="Views\Cuestionario\Ver.cshtml" />
     <Content Include="Views\Cuestionario\AgregarEditar.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
