@@ -1,15 +1,21 @@
 ﻿@model RefuerzaUPT.Models.Cuestionario
 @{
     ViewBag.Title = "Agregar";
-    List<RefuerzaUPT.Models.Pregunta> listaPreguntas = new List<RefuerzaUPT.Models.Pregunta> ();
+    List<RefuerzaUPT.Models.Pregunta> listaPreguntas = new List<RefuerzaUPT.Models.Pregunta>();
     try
     {
         listaPreguntas = new RefuerzaUPT.Models.Pregunta().ListarPorCuestionario(Model.cuestionarioID);
     }
     catch (Exception) { }
 }
-
-<center><h1>Cuestionario ###</h1></center>
+@if (Model.Tema != null)
+{
+    <center><h1>Cuestionario @Model.Tema.Curso.nombre - @Model.Tema.nombre</h1></center>
+}
+else
+{
+    <center><h1>Nuevo Cuestionario</h1></center>
+}
 
 @using (Html.BeginForm("Guardar", "Cuestionario", FormMethod.Post, new { id = "frm-cuestionario" }))
 {

@@ -1,0 +1,18 @@
+﻿@model RefuerzaUPT.Models.Alternativa
+
+@if (Model.Pregunta.tipoPreguntaID == 2)
+{
+    <div class="check">
+        <label>
+            <input type="checkbox" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" value="@Model.alternativa1" @(Model.respuestaCorrecta ? "checked" : "")> @Model.alternativa1
+        </label>
+    </div>
+}
+else
+{
+    <div class="radio">
+        <label>
+            <input type="radio" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" value="@Model.alternativa1" @(Model.respuestaCorrecta ? "checked" : "")> @Model.alternativa1
+        </label>
+    </div>
+}

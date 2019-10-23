@@ -10,8 +10,11 @@ namespace RefuerzaUPT.Controllers
     public class CuestionarioController : Controller
     {
         private Cuestionario Cuestionario = new Cuestionario();
+        private Pregunta Pregunta = new Pregunta();
+        private Alternativa Alternativa = new Alternativa();
 
         /**
+         * 
          * 
          * 
          */
@@ -21,6 +24,7 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
+         *
          * 
          * 
          */
@@ -43,6 +47,7 @@ namespace RefuerzaUPT.Controllers
 
         /**
          *
+         * 
          *
          */
         public ActionResult AgregarEditar(int _id)
@@ -82,6 +87,60 @@ namespace RefuerzaUPT.Controllers
             Cuestionario.cuestionarioID = _id;
             Cuestionario.Eliminar();
             return Redirect("~/Cuestionario");
+        }
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+        public ActionResult AgregarPregunta()
+        {
+            return PartialView("_PreguntaCuestionario", new Pregunta());
+        }
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+        public ActionResult EliminarPregunta(int _id = 0)
+        {
+            if (_id > 0)
+            {
+                Pregunta.preguntaID = _id;
+                Pregunta.Eliminar();
+            }
+            return Json("Eliminado");
+        }
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+        public ActionResult AgregarAlternativa()
+        {
+            return PartialView("_AlternativaPregunta", new Alternativa());
+        }
+
+        /**
+         * 
+         * 
+         * 
+         * 
+         */
+        public ActionResult EliminarAlternativa(int _id = 0)
+        {
+            if (_id > 0)
+            {
+                Alternativa.alternativaID = _id;
+                Alternativa.Eliminar();
+            }
+            return Json("Eliminado");
         }
     }
 }

@@ -18,30 +18,10 @@
         }
     </div>
     <div class="panel-body">
-        @{
-            int indiceAlternativa = 0;
-        }
         @foreach (var item in listaAlternativas)
         {
-            if (Model.tipoPreguntaID == 2)
-            {
-                <div class="check">
-                    <label>
-                        <input type="checkbox" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(indiceAlternativa)" value="@item.alternativa1" @(item.respuestaCorrecta ? "checked" : "")> @item.alternativa1
-                    </label>
-                </div>
-            }
-            else
-            {
-                <div class="radio">
-                    <label>
-                        <input type="radio" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(indiceAlternativa)" value="@item.alternativa1" @(item.respuestaCorrecta ? "checked" : "")> @item.alternativa1
-                    </label>
-                </div>
-            }
-            {
-                indiceAlternativa++;
-            }
+            @Html.Partial("_AlternativaPregunta", item)
         }
     </div>
 </div>
+<br />

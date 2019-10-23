@@ -55,7 +55,10 @@ namespace RefuerzaUPT.Models
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    Cuestionario = db.Cuestionario.ToList();
+                    Cuestionario = db.Cuestionario
+                        .Include("Tema")
+                        .Include("Tema.Curso")
+                        .ToList();
                 }
             }
             catch (Exception ex)
@@ -73,6 +76,8 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     Cuestionario = db.Cuestionario
+                        .Include("Tema")
+                        .Include("Tema.Curso")
                         .Where(x => x.cuestionarioID == id)
                         .SingleOrDefault();
                 }
@@ -91,9 +96,11 @@ namespace RefuerzaUPT.Models
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    Cuestionario = db.Cuestionario.Include("Tema.Curso")
-                              .Where(x => x.Tema.Curso.cursoID == id)
-                              .ToList();
+                    Cuestionario = db.Cuestionario
+                        .Include("Tema")
+                        .Include("Tema.Curso")
+                        .Where(x => x.Tema.Curso.cursoID == id)
+                        .ToList();
                 }
             }
             catch (Exception ex)
