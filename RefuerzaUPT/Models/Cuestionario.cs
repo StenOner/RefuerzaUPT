@@ -50,29 +50,29 @@ namespace RefuerzaUPT.Models
 
         public List<Cuestionario> Listar()
         {
-            var objCuestionario = new List<Cuestionario>();
+            var Cuestionario = new List<Cuestionario>();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    objCuestionario = db.Cuestionario.ToList();
+                    Cuestionario = db.Cuestionario.ToList();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-            return objCuestionario;
+            return Cuestionario;
         }
 
         public Cuestionario Obtener(int id)
         {
-            var objCuestionario = new Cuestionario();
+            var Cuestionario = new Cuestionario();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    objCuestionario = db.Cuestionario
+                    Cuestionario = db.Cuestionario
                         .Where(x => x.cuestionarioID == id)
                         .SingleOrDefault();
                 }
@@ -81,17 +81,17 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return objCuestionario;
+            return Cuestionario;
         }
 
         public List<Cuestionario> ObtenerPorCurso(int id)
         {
-            var objCuestionario = new List<Cuestionario>();
+            var Cuestionario = new List<Cuestionario>();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    objCuestionario = db.Cuestionario.Include("Tema.Curso")
+                    Cuestionario = db.Cuestionario.Include("Tema.Curso")
                               .Where(x => x.Tema.Curso.cursoID == id)
                               .ToList();
                 }
@@ -100,7 +100,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return objCuestionario;
+            return Cuestionario;
         }
 
         public void Guardar()

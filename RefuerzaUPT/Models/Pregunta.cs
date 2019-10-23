@@ -4,7 +4,9 @@ namespace RefuerzaUPT.Models
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Pregunta")]
     public partial class Pregunta
@@ -25,7 +27,7 @@ namespace RefuerzaUPT.Models
         [Column("pregunta")]
         [Required]
         [StringLength(200)]
-        public string pregunta1 { get; set; }
+        public string enunciado { get; set; }
 
         [StringLength(200)]
         public string imagen { get; set; }
@@ -41,5 +43,82 @@ namespace RefuerzaUPT.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuesta> Respuesta { get; set; }
+
+        public List<Pregunta> ListarPorCuestionario(int _id)
+        {
+            var listaPregunta = new List<Pregunta>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    listaPregunta = db.Pregunta
+                        .Where(x => x.cuestionarioID == _id)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaPregunta;
+        }
+
+        public Pregunta Obtener(int id)
+        {
+            var Pregunta = new Pregunta();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    Pregunta = db.Pregunta
+                        .Where(x => x.preguntaID == id)
+                        .SingleOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return Pregunta;
+        }
+
+        public void Guardar()
+        {
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    if (this.preguntaID > 0)
+                    {
+                        db.Entry(this).State = EntityState.Modified;
+                    }
+                    else
+                    {
+                        db.Entry(this).State = EntityState.Added;
+                    }
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
+
+        public void Eliminar()
+        {
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    db.Entry(this).State = EntityState.Deleted;
+                    db.SaveChanges();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+        }
     }
 }

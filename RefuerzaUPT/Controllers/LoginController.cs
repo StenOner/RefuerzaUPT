@@ -17,9 +17,9 @@ namespace RefuerzaUPT.Controllers
         {
             return View();
         }
-        public JsonResult Validar(string Usuario, string Password)
+        public JsonResult Validar(string _Correo, string _Clave)
         {
-            var rm = usuario.ValidarLogin(Usuario, Password);
+            var rm = usuario.ValidarLogin(_Correo, _Clave);
             if (rm.response)
             {
                 rm.href = Url.Content("/Cuestionario");

@@ -1,0 +1,47 @@
+﻿@model RefuerzaUPT.Models.Pregunta
+@{ 
+    List<RefuerzaUPT.Models.Alternativa> listaAlternativas = new List<RefuerzaUPT.Models.Alternativa>();
+    try
+    {
+        listaAlternativas = new RefuerzaUPT.Models.Alternativa().ListarPorPregunta(Model.preguntaID);
+    }
+    catch (Exception) { }
+}
+<div class="panel panel-primary">
+    <div class="panel-heading">
+        <h3 class="panel-title">
+            @Model.enunciado
+        </h3>
+        @if(Model.imagen != null)
+        {
+            <h1>ACA HAY UNA IMAGEN</h1>
+        }
+    </div>
+    <div class="panel-body">
+        @{
+            int indiceAlternativa = 0;
+        }
+        @foreach (var item in listaAlternativas)
+        {
+            if (Model.tipoPreguntaID == 2)
+            {
+                <div class="check">
+                    <label>
+                        <input type="checkbox" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(indiceAlternativa)" value="@item.alternativa1" @(item.respuestaCorrecta ? "checked" : "")> @item.alternativa1
+                    </label>
+                </div>
+            }
+            else
+            {
+                <div class="radio">
+                    <label>
+                        <input type="radio" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(indiceAlternativa)" value="@item.alternativa1" @(item.respuestaCorrecta ? "checked" : "")> @item.alternativa1
+                    </label>
+                </div>
+            }
+            {
+                indiceAlternativa++;
+            }
+        }
+    </div>
+</div>

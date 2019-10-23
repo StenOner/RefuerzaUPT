@@ -55,7 +55,35 @@ namespace RefuerzaUPT.Models
 
         public virtual TipoUsuario TipoUsuario { get; set; }
 
-        public ResponseModel ValidarLogin(string user, string password)
+        /**
+         * 
+         * 
+         */
+        public Usuario Obtener(int id) //retorna un objeto
+        {
+            var usuario = new Usuario();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    usuario = db.Usuario
+                                .Where(x => x.usuarioID == id)
+                                .SingleOrDefault();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return usuario;
+        }
+
+        /**
+         * 
+         * 
+         * 
+         */
+        public ResponseModel ValidarLogin(string _correo, string _clave)
         {
             var rm = new ResponseModel();
             try
@@ -63,8 +91,8 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     var usuario = db.Usuario
-                        .Where(x => x.nombre.Equals(user) &&
-                                x.clave.Equals(password)).SingleOrDefault();
+                        .Where(x => x.correo.Equals(_correo) &&
+                                x.clave.Equals(_clave)).SingleOrDefault();
 
                     if (usuario != null)
                     {
@@ -84,9 +112,9 @@ namespace RefuerzaUPT.Models
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                Console.WriteLine(ex.ToString());
             }
             return rm;
         }

@@ -67,27 +67,6 @@ CREATE TABLE Cuestionario(
     FOREIGN KEY (temaID) REFERENCES Tema
 );
 GO
-CREATE TABLE CuestionarioBloqueado(
-    cuestionarioBloqueadoID INT IDENTITY(1,1),
-    cuestionarioDesbloquearID INT NOT NULL,
-    cuestionarioRequeridoID INT NOT NULL,
-    PRIMARY KEY (cuestionarioBloqueadoID),
-    FOREIGN KEY (cuestionarioDesbloquearID) REFERENCES Cuestionario,
-    FOREIGN KEY (cuestionarioRequeridoID) REFERENCES Cuestionario
-);
-GO
-CREATE TABLE IntentoCuestionario(
-    intentoCuestionarioID INT IDENTITY(1,1),
-    cuestionarioID INT NOT NULL,
-    usuarioID INT NOT NULL,
-    nota INT NOT NULL,
-    tiempoResolucion INT NOT NULL,
-    estado BIT NOT NULL,
-    PRIMARY KEY (intentoCuestionarioID),
-    FOREIGN KEY (cuestionarioID) REFERENCES Cuestionario,
-    FOREIGN KEY (usuarioID) REFERENCES Usuario
-);
-GO
 CREATE TABLE TipoPregunta(
     tipoPreguntaID INT IDENTITY(1,1),
     nombre VARCHAR(50) NOT NULL,
@@ -116,6 +95,27 @@ CREATE TABLE Alternativa(
     PRIMARY KEY (alternativaID),
     FOREIGN KEY (preguntaID) REFERENCES Pregunta
 );
+CREATE TABLE CuestionarioBloqueado(
+    cuestionarioBloqueadoID INT IDENTITY(1,1),
+    cuestionarioDesbloquearID INT NOT NULL,
+    cuestionarioRequeridoID INT NOT NULL,
+    PRIMARY KEY (cuestionarioBloqueadoID),
+    FOREIGN KEY (cuestionarioDesbloquearID) REFERENCES Cuestionario,
+    FOREIGN KEY (cuestionarioRequeridoID) REFERENCES Cuestionario
+);
+GO
+CREATE TABLE IntentoCuestionario(
+    intentoCuestionarioID INT IDENTITY(1,1),
+    cuestionarioID INT NOT NULL,
+    usuarioID INT NOT NULL,
+    nota INT NOT NULL,
+    tiempoResolucion INT NOT NULL,
+    estado BIT NOT NULL,
+    PRIMARY KEY (intentoCuestionarioID),
+    FOREIGN KEY (cuestionarioID) REFERENCES Cuestionario,
+    FOREIGN KEY (usuarioID) REFERENCES Usuario
+);
+GO
 GO
 CREATE TABLE Respuesta(
     respuestaID INT IDENTITY(1,1),

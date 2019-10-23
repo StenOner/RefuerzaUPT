@@ -92,7 +92,7 @@ namespace RefuerzaUPT.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Pregunta>()
-                .Property(e => e.pregunta1)
+                .Property(e => e.enunciado)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Pregunta>()

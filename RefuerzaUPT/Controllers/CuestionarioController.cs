@@ -9,7 +9,7 @@ namespace RefuerzaUPT.Controllers
 {
     public class CuestionarioController : Controller
     {
-        private Cuestionario objCuestionario = new Cuestionario();
+        private Cuestionario Cuestionario = new Cuestionario();
 
         /**
          * 
@@ -17,7 +17,7 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Index()
         {
-            return View(objCuestionario.Listar());
+            return View(Cuestionario.Listar());
         }
 
         /**
@@ -26,7 +26,7 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Ver(int _id)
         {
-            return View(objCuestionario.Obtener(_id));
+            return View(Cuestionario.Obtener(_id));
         }
 
         /**
@@ -38,7 +38,7 @@ namespace RefuerzaUPT.Controllers
         public ActionResult ResolverCuestionario(int _id)
         {
 
-            return View(objCuestionario.Obtener(_id));
+            return View(Cuestionario.Obtener(_id));
         }
 
         /**
@@ -49,7 +49,7 @@ namespace RefuerzaUPT.Controllers
         {
             return View(
                 _id == 0 ? new Cuestionario()
-                : objCuestionario.Obtener(_id));
+                : Cuestionario.Obtener(_id));
         }
 
         /**
@@ -79,8 +79,8 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Eliminar(int _id)
         {
-            objCuestionario.cuestionarioID = _id;
-            objCuestionario.Eliminar();
+            Cuestionario.cuestionarioID = _id;
+            Cuestionario.Eliminar();
             return Redirect("~/Cuestionario");
         }
     }
