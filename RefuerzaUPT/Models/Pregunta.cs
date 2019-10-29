@@ -63,15 +63,15 @@ namespace RefuerzaUPT.Models
             return listaPregunta;
         }
 
-        public Pregunta Obtener(int id)
+        public Pregunta Obtener(int _id)
         {
-            var Pregunta = new Pregunta();
+            var listaPregunta = new Pregunta();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    Pregunta = db.Pregunta
-                        .Where(x => x.preguntaID == id)
+                    listaPregunta = db.Pregunta
+                        .Where(x => x.preguntaID == _id)
                         .SingleOrDefault();
                 }
             }
@@ -79,7 +79,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return Pregunta;
+            return listaPregunta;
         }
 
         public void Guardar()

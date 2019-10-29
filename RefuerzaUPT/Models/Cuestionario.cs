@@ -2,10 +2,8 @@ namespace RefuerzaUPT.Models
 {
     using System;
     using System.Collections.Generic;
-    using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity;
-    using System.Data.Entity.Spatial;
     using System.Linq;
 
     [Table("Cuestionario")]
@@ -50,12 +48,12 @@ namespace RefuerzaUPT.Models
 
         public List<Cuestionario> Listar()
         {
-            var Cuestionario = new List<Cuestionario>();
+            var listaCuestionario = new List<Cuestionario>();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    Cuestionario = db.Cuestionario
+                    listaCuestionario = db.Cuestionario
                         .Include("Tema")
                         .Include("Tema.Curso")
                         .ToList();
@@ -65,20 +63,41 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return Cuestionario;
+            return listaCuestionario;
         }
 
-        public Cuestionario Obtener(int id)
+        public List<Cuestionario> ListarPorCurso(int _id)
         {
-            var Cuestionario = new Cuestionario();
+            var listaCuestionario = new List<Cuestionario>();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    Cuestionario = db.Cuestionario
+                    listaCuestionario = db.Cuestionario
                         .Include("Tema")
                         .Include("Tema.Curso")
-                        .Where(x => x.cuestionarioID == id)
+                        .Where(x => x.Tema.Curso.cursoID == _id)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaCuestionario;
+        }
+
+        public Cuestionario Obtener(int _id)
+        {
+            var objetoCuestionario = new Cuestionario();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    objetoCuestionario = db.Cuestionario
+                        .Include("Tema")
+                        .Include("Tema.Curso")
+                        .Where(x => x.cuestionarioID == _id)
                         .SingleOrDefault();
                 }
             }
@@ -86,28 +105,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return Cuestionario;
-        }
-
-        public List<Cuestionario> ObtenerPorCurso(int id)
-        {
-            var Cuestionario = new List<Cuestionario>();
-            try
-            {
-                using (var db = new ModeloCuestionario())
-                {
-                    Cuestionario = db.Cuestionario
-                        .Include("Tema")
-                        .Include("Tema.Curso")
-                        .Where(x => x.Tema.Curso.cursoID == id)
-                        .ToList();
-                }
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.ToString());
-            }
-            return Cuestionario;
+            return objetoCuestionario;
         }
 
         public void Guardar()

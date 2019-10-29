@@ -29,7 +29,7 @@ namespace RefuerzaUPT.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Alternativa>()
-                .Property(e => e.alternativa1)
+                .Property(e => e.enunciado)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Alternativa>()
@@ -39,7 +39,7 @@ namespace RefuerzaUPT.Models
 
             modelBuilder.Entity<Cuestionario>()
                 .HasMany(e => e.CuestionarioBloqueado)
-                .WithRequired(e => e.Cuestionario)
+                .WithRequired(e => e.Cuestionario1)
                 .HasForeignKey(e => e.cuestionarioDesbloquearID)
                 .WillCascadeOnDelete(false);
 

@@ -24,7 +24,7 @@ namespace RefuerzaUPT.Models
         [Column("alternativa")]
         [Required]
         [StringLength(200)]
-        public string alternativa1 { get; set; }
+        public string enunciado { get; set; }
 
         public bool respuestaCorrecta { get; set; }
 
@@ -55,16 +55,16 @@ namespace RefuerzaUPT.Models
             return listaAlternativa;
         }
 
-        public Alternativa Obtener(int id)
+        public Alternativa Obtener(int _id)
         {
-            var Alternativa = new Alternativa();
+            var objetoAlternativa = new Alternativa();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    Alternativa = db.Alternativa
+                    objetoAlternativa = db.Alternativa
                         .Include("Pregunta")
-                        .Where(x => x.alternativaID == id)
+                        .Where(x => x.alternativaID == _id)
                         .SingleOrDefault();
                 }
             }
@@ -72,7 +72,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return Alternativa;
+            return objetoAlternativa;
         }
 
         public void Guardar()

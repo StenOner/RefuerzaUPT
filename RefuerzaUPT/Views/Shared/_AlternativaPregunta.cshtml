@@ -2,17 +2,15 @@
 
 @if (Model.Pregunta.tipoPreguntaID == 2)
 {
-    <div class="check">
-        <label>
-            <input type="checkbox" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" value="@Model.alternativa1" @(Model.respuestaCorrecta ? "checked" : "")> @Model.alternativa1
-        </label>
+    <div class="custom-control custom-checkbox">
+        <input type="checkbox" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" name="Pregunta@(Model.preguntaID)" class="custom-control-input" @(Model.respuestaCorrecta ? "checked" : "")>
+        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">@Model.enunciado</label>
     </div>
 }
 else
 {
-    <div class="radio">
-        <label>
-            <input type="radio" name="Pregunta@(Model.preguntaID)" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" value="@Model.alternativa1" @(Model.respuestaCorrecta ? "checked" : "")> @Model.alternativa1
-        </label>
+    <div class="custom-control custom-radio">
+        <input type="radio" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" name="Pregunta@(Model.preguntaID)" class="custom-control-input" value="@Model.enunciado" @(Model.respuestaCorrecta ? "checked" : "")>
+        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">@(Model.enunciado)</label>
     </div>
 }

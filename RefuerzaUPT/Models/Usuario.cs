@@ -59,15 +59,15 @@ namespace RefuerzaUPT.Models
          * 
          * 
          */
-        public Usuario Obtener(int id) //retorna un objeto
+        public Usuario Obtener(int _id) //retorna un objeto
         {
-            var usuario = new Usuario();
+            var objetoUsuario = new Usuario();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    usuario = db.Usuario
-                                .Where(x => x.usuarioID == id)
+                    objetoUsuario = db.Usuario
+                                .Where(x => x.usuarioID == _id)
                                 .SingleOrDefault();
                 }
             }
@@ -75,7 +75,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return usuario;
+            return objetoUsuario;
         }
 
         /**
@@ -90,15 +90,15 @@ namespace RefuerzaUPT.Models
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    var usuario = db.Usuario
+                    var objetoUsuario = db.Usuario
                         .Where(x => x.correo.Equals(_correo) &&
                                 x.clave.Equals(_clave)).SingleOrDefault();
 
-                    if (usuario != null)
+                    if (objetoUsuario != null)
                     {
-                        if (usuario.estado)
+                        if (objetoUsuario.estado)
                         {
-                            SessionHelper.AddUserToSession(usuario.usuarioID.ToString());
+                            SessionHelper.AddUserToSession(objetoUsuario.usuarioID.ToString());
                             rm.SetResponse(true);
                         }
                         else
