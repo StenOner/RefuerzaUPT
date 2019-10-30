@@ -45,7 +45,7 @@ namespace RefuerzaUPT.Models
 
             modelBuilder.Entity<Cuestionario>()
                 .HasMany(e => e.CuestionarioBloqueado1)
-                .WithRequired(e => e.Cuestionario1)
+                .WithRequired(e => e.Cuestionario2)
                 .HasForeignKey(e => e.cuestionarioRequeridoID)
                 .WillCascadeOnDelete(false);
 

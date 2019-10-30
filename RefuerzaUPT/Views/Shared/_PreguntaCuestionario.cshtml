@@ -10,9 +10,9 @@
 <div class="panel panel-primary">
     <div class="panel-heading">
         <h3 class="panel-title">
-            @Model.enunciado
+            <input type="text" class="form-control" id="" name="" value="@Model.enunciado"/>
         </h3>
-        @if(Model.imagen != null)
+        @if(!string.IsNullOrEmpty(Model.imagen))
         {
             <h1>ACA HAY UNA IMAGEN</h1>
         }

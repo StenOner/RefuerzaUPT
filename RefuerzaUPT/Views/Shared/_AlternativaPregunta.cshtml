@@ -4,13 +4,17 @@
 {
     <div class="custom-control custom-checkbox">
         <input type="checkbox" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" name="Pregunta@(Model.preguntaID)" class="custom-control-input" @(Model.respuestaCorrecta ? "checked" : "")>
-        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">@Model.enunciado</label>
+        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">
+            <input type="text" style="width:400%" value="@(Model.enunciado)" />
+        </label>
     </div>
 }
 else
 {
     <div class="custom-control custom-radio">
         <input type="radio" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" name="Pregunta@(Model.preguntaID)" class="custom-control-input" value="@Model.enunciado" @(Model.respuestaCorrecta ? "checked" : "")>
-        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">@(Model.enunciado)</label>
+        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">
+            <input type="text" style="width:400%" value="@(Model.enunciado)"/>
+        </label>
     </div>
 }

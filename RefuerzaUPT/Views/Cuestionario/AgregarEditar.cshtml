@@ -8,6 +8,7 @@
     }
     catch (Exception) { }
 }
+
 @if (Model.Tema != null)
 {
     <center><h1>Cuestionario @Model.Tema.Curso.nombre - @Model.Tema.nombre</h1></center>
@@ -19,8 +20,27 @@ else
 
 @using (Html.BeginForm("Guardar", "Cuestionario", FormMethod.Post, new { id = "frm-cuestionario" }))
 {
-    foreach (var item in listaPreguntas)
-    {
-        @Html.Partial("_PreguntaCuestionario", item);
-    }
+    <div id="Cuestionario">
+        @foreach (var item in listaPreguntas)
+        {
+            @Html.Partial("_PreguntaCuestionario", item);
+        }
+    </div>
 }
+
+<div class="row">
+    <button id="AgregarPregunta" type="button" class="btn btn-primary">Agregar Pregunta</button>
+</div>
+
+<div class="row float-right">
+    <button id="GuardarCuestionario" type="button" class="btn btn-success">Guardar</button>
+</div>
+
+<script type="text/javascript">
+    var url = '@Url.Action("AgregarPregunta", "Cuestionario")';
+    $('#AgregarPregunta').click(function () {
+        $.get(url, function (response) {
+            document.getElementById('Cuestionario').innerHTML += response;
+        });
+    });
+</script>
