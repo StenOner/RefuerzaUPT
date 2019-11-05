@@ -65,6 +65,9 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Guardar(Cuestionario _cuestionario)
         {
+            string[] allKeys = Request.Form.AllKeys;
+            //obtener valores de forms de igual nombre
+            string[] values = Request.Form.GetValues("Pregunta1");
             if (ModelState.IsValid)
             {
                 _cuestionario.Guardar();

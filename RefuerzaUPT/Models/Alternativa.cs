@@ -24,7 +24,7 @@ namespace RefuerzaUPT.Models
         [Column("alternativa")]
         [Required]
         [StringLength(200)]
-        public string enunciado { get; set; }
+        public string enunciadoAlternativa { get; set; }
 
         public bool respuestaCorrecta { get; set; }
 

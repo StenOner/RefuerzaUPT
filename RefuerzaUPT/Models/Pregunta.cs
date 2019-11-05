@@ -27,7 +27,7 @@ namespace RefuerzaUPT.Models
         [Column("pregunta")]
         [Required]
         [StringLength(200)]
-        public string enunciado { get; set; }
+        public string enunciadoPregunta { get; set; }
 
         [StringLength(200)]
         public string imagen { get; set; }

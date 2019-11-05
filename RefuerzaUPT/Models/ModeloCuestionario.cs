@@ -29,7 +29,7 @@ namespace RefuerzaUPT.Models
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Alternativa>()
-                .Property(e => e.enunciado)
+                .Property(e => e.enunciadoAlternativa)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Alternativa>()
@@ -92,7 +92,7 @@ namespace RefuerzaUPT.Models
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<Pregunta>()
-                .Property(e => e.enunciado)
+                .Property(e => e.enunciadoPregunta)
                 .IsUnicode(false);
 
             modelBuilder.Entity<Pregunta>()

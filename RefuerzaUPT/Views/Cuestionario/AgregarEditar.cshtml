@@ -21,6 +21,7 @@ else
 @using (Html.BeginForm("Guardar", "Cuestionario", FormMethod.Post, new { id = "frm-cuestionario" }))
 {
     <div id="Cuestionario">
+        @Html.HiddenFor(m => m.cuestionarioID)
         @foreach (var item in listaPreguntas)
         {
             @Html.Partial("_PreguntaCuestionario", item);
@@ -37,10 +38,13 @@ else
 </div>
 
 <script type="text/javascript">
-    var url = '@Url.Action("AgregarPregunta", "Cuestionario")';
     $('#AgregarPregunta').click(function () {
+        let url = '@Url.Action("AgregarPregunta", "Cuestionario")';
         $.get(url, function (response) {
             document.getElementById('Cuestionario').innerHTML += response;
         });
+    });
+    $('#GuardarCuestionario').click(function () {
+        $('#frm-cuestionario').submit();
     });
 </script>

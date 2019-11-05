@@ -1,5 +1,6 @@
-﻿@model RefuerzaUPT.Models.Pregunta
-@{ 
+﻿@using HtmlHelpers.BeginCollectionItem
+@model RefuerzaUPT.Models.Pregunta
+@{
     List<RefuerzaUPT.Models.Alternativa> listaAlternativas = new List<RefuerzaUPT.Models.Alternativa>();
     try
     {
@@ -7,21 +8,29 @@
     }
     catch (Exception) { }
 }
-<div class="panel panel-primary">
-    <div class="panel-heading">
-        <h3 class="panel-title">
-            <input type="text" class="form-control" id="" name="" value="@Model.enunciado"/>
-        </h3>
-        @if(!string.IsNullOrEmpty(Model.imagen))
-        {
-            <h1>ACA HAY UNA IMAGEN</h1>
-        }
+@using (Html.BeginCollectionItem("Pregunta"))
+{
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">
+                @Html.HiddenFor(m => m.preguntaID)
+                @Html.HiddenFor(m => m.tipoPreguntaID)
+                @Html.TextBoxFor(m => m.enunciadoPregunta, new { @class="form-control" })
+            </h3>
+            @if (!string.IsNullOrEmpty(Model.imagen))
+            {
+                <h1>ACA HAY UNA IMAGEN</h1>
+            }
+        </div>
+        <div class="panel-body">
+            @foreach (var item in listaAlternativas)
+            {
+                @Html.Partial("_AlternativaPregunta", item);
+            }
+            <br />
+            <button class="btn btn-outline-info" id="AgregarAlternativa" value="@Model.preguntaID">Agregar</button>
+            <button class="btn btn-outline-danger" id="EliminarAlternativa" value="@Model.preguntaID">Eliminar</button>
+        </div>
     </div>
-    <div class="panel-body">
-        @foreach (var item in listaAlternativas)
-        {
-            @Html.Partial("_AlternativaPregunta", item)
-        }
-    </div>
-</div>
-<br />
+    <br />
+}

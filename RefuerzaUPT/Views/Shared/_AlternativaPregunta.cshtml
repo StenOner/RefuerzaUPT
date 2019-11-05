@@ -1,20 +1,20 @@
-﻿@model RefuerzaUPT.Models.Alternativa
-
+﻿@using HtmlHelpers.BeginCollectionItem
+@model RefuerzaUPT.Models.Alternativa
 @if (Model.Pregunta.tipoPreguntaID == 2)
 {
     <div class="custom-control custom-checkbox">
-        <input type="checkbox" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" name="Pregunta@(Model.preguntaID)" class="custom-control-input" @(Model.respuestaCorrecta ? "checked" : "")>
-        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">
-            <input type="text" style="width:400%" value="@(Model.enunciado)" />
+        @Html.CheckBoxFor(m => m.respuestaCorrecta, new { @class = "custom-control-input" })        
+        <label class="custom-control-label" for="@Model.respuestaCorrecta">
+            @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @style = "width:400%" })
         </label>
     </div>
 }
 else
 {
     <div class="custom-control custom-radio">
-        <input type="radio" id="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)" name="Pregunta@(Model.preguntaID)" class="custom-control-input" value="@Model.enunciado" @(Model.respuestaCorrecta ? "checked" : "")>
-        <label class="custom-control-label" for="Pregunta@(Model.preguntaID)Alternativa@(Model.alternativaID)">
-            <input type="text" style="width:400%" value="@(Model.enunciado)"/>
+        @Html.RadioButtonFor(m => m.respuestaCorrecta, Model.respuestaCorrecta, new { @class = "custom-control-input" })
+        <label class="custom-control-label" for="@Model.respuestaCorrecta">
+            @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @style = "width:400%" })
         </label>
     </div>
 }
