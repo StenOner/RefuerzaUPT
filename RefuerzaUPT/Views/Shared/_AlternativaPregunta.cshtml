@@ -1,20 +1,35 @@
 ﻿@using HtmlHelpers.BeginCollectionItem
 @model RefuerzaUPT.Models.Alternativa
+
 @if (Model.Pregunta.tipoPreguntaID == 2)
 {
-    <div class="custom-control custom-checkbox">
-        @Html.CheckBoxFor(m => m.respuestaCorrecta, new { @class = "custom-control-input" })        
-        <label class="custom-control-label" for="@Model.respuestaCorrecta">
+    @*<div class="custom-control custom-checkbox">
+        <input type="checkbox" id="Alternativa@(Html.IdFor(m => m.respuestaCorrecta))" name="Alternativa@(Html.IdFor(m => m.respuestaCorrecta))" class="custom-control-input" @(Model.respuestaCorrecta ? "checked" : "") />
+        @Html.CheckBoxFor(m => m.respuestaCorrecta, new { @class = "custom-control-input" })
+        <label class="custom-control-label" for="Alternativa@(Html.IdFor(m => m.respuestaCorrecta))">
             @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @style = "width:400%" })
         </label>
+    </div>*@
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+            @Html.CheckBoxFor(m => m.respuestaCorrecta, Model.respuestaCorrecta)
+        </div>
     </div>
+    @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control" })
 }
 else
 {
-    <div class="custom-control custom-radio">
-        @Html.RadioButtonFor(m => m.respuestaCorrecta, Model.respuestaCorrecta, new { @class = "custom-control-input" })
-        <label class="custom-control-label" for="@Model.respuestaCorrecta">
-            @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @style = "width:400%" })
-        </label>
+    @*<div class="custom-control custom-radio">
+            <input type="radio" id="Alternativa@(Html.IdFor(m => m.respuestaCorrecta))" name="Alternativa@(Html.IdFor(m => m.respuestaCorrecta))" class="custom-control-input" @(Model.respuestaCorrecta ? "checked": "") />
+            @Html.RadioButtonFor(m => m.respuestaCorrecta, Model.respuestaCorrecta, new { @class = "custom-control-input" })
+            <label class="custom-control-label" for="Alternativa@(Html.IdFor(m => m.respuestaCorrecta))">
+                @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @style = "width:400%" })
+            </label>
+        </div>*@
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+            @Html.RadioButtonFor(m => m.respuestaCorrecta, Model.respuestaCorrecta)
+        </div>
     </div>
+    @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control" })
 }

@@ -9,9 +9,9 @@ namespace RefuerzaUPT.Controllers
 {
     public class CuestionarioController : Controller
     {
-        private Cuestionario Cuestionario = new Cuestionario();
-        private Pregunta Pregunta = new Pregunta();
-        private Alternativa Alternativa = new Alternativa();
+        private Cuestionario objetoCuestionario = new Cuestionario();
+        private Pregunta objetoPregunta = new Pregunta();
+        private Alternativa objetoAlternativa = new Alternativa();
 
         /**
          * 
@@ -20,7 +20,7 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Index()
         {
-            return View(Cuestionario.Listar());
+            return View(objetoCuestionario.Listar());
         }
 
         /**
@@ -30,7 +30,7 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Ver(int _id)
         {
-            return View(Cuestionario.Obtener(_id));
+            return View(objetoCuestionario.Obtener(_id));
         }
 
         /**
@@ -42,7 +42,7 @@ namespace RefuerzaUPT.Controllers
         public ActionResult ResolverCuestionario(int _id)
         {
 
-            return View(Cuestionario.Obtener(_id));
+            return View(objetoCuestionario.Obtener(_id));
         }
 
         /**
@@ -54,7 +54,7 @@ namespace RefuerzaUPT.Controllers
         {
             return View(
                 _id == 0 ? new Cuestionario()
-                : Cuestionario.Obtener(_id));
+                : objetoCuestionario.Obtener(_id));
         }
 
         /**
@@ -87,8 +87,8 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Eliminar(int _id)
         {
-            Cuestionario.cuestionarioID = _id;
-            Cuestionario.Eliminar();
+            objetoCuestionario.cuestionarioID = _id;
+            objetoCuestionario.Eliminar();
             return Redirect("~/Cuestionario");
         }
 
@@ -113,8 +113,8 @@ namespace RefuerzaUPT.Controllers
         {
             if (_id > 0)
             {
-                Pregunta.preguntaID = _id;
-                Pregunta.Eliminar();
+                objetoPregunta.preguntaID = _id;
+                objetoPregunta.Eliminar();
             }
             return Json("Eliminado");
         }
@@ -140,8 +140,8 @@ namespace RefuerzaUPT.Controllers
         {
             if (_id > 0)
             {
-                Alternativa.alternativaID = _id;
-                Alternativa.Eliminar();
+                objetoAlternativa.alternativaID = _id;
+                objetoAlternativa.Eliminar();
             }
             return Json("Eliminado");
         }

@@ -10,7 +10,7 @@ namespace RefuerzaUPT.Controllers
 {
     public class LoginController : Controller
     {
-        private Usuario Usuario = new Usuario();
+        private Usuario objetoUsuario = new Usuario();
 
         [NoLogin]
         public ActionResult Index()
@@ -18,9 +18,9 @@ namespace RefuerzaUPT.Controllers
             return View();
         }
 
-        public JsonResult Validar(string _Correo, string _Clave)
+        public JsonResult Validar(string _correo, string _clave)
         {
-            var rm = Usuario.ValidarLogin(_Correo, _Clave);
+            var rm = objetoUsuario.ValidarLogin(_correo, _clave);
             if (rm.response)
             {
                 rm.href = Url.Content("/Cuestionario");

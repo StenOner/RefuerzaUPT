@@ -7,6 +7,7 @@
         listaAlternativas = new RefuerzaUPT.Models.Alternativa().ListarPorPregunta(Model.preguntaID);
     }
     catch (Exception) { }
+    Guid guid = Guid.NewGuid();
 }
 @using (Html.BeginCollectionItem("Pregunta"))
 {
@@ -15,7 +16,7 @@
             <h3 class="panel-title">
                 @Html.HiddenFor(m => m.preguntaID)
                 @Html.HiddenFor(m => m.tipoPreguntaID)
-                @Html.TextBoxFor(m => m.enunciadoPregunta, new { @class="form-control" })
+                @Html.TextBoxFor(m => m.enunciadoPregunta, new { @class = "form-control" })
             </h3>
             @if (!string.IsNullOrEmpty(Model.imagen))
             {
@@ -25,12 +26,46 @@
         <div class="panel-body">
             @foreach (var item in listaAlternativas)
             {
-                @Html.Partial("_AlternativaPregunta", item);
+                <div class="input-group">
+                    @Html.Partial("_AlternativaPregunta", item)
+                </div>
             }
             <br />
-            <button class="btn btn-outline-info" id="AgregarAlternativa" value="@Model.preguntaID">Agregar</button>
-            <button class="btn btn-outline-danger" id="EliminarAlternativa" value="@Model.preguntaID">Eliminar</button>
+            <input type="button" class="btn btn-outline-info" id="Boton_@Html.IdFor(m => m.preguntaID)" onclick="AgregarAlternativa(this.id)" value="Agregar" />
+            <input type="button" class="btn btn-outline-danger" id="Boton_@Html.IdFor(m => m.preguntaID)" onclick="EliminarAlternativa(this.id)" value="Eliminar" />
         </div>
     </div>
     <br />
 }
+<script type="text/javascript">
+    function AgregarAlternativa(_id) {
+        var respuestaCorrectaID = _id.replace('Boton_', '').replace('preguntaID', 'respuestaCorrecta');
+        var respuestaCorrectaName = respuestaCorrectaID.replace('Pregunta_', 'Pregunta[').replace('__respuestaCorrecta', '].respuestaCorrecta');
+        var enunciadoAlternativaID = _id.replace('Boton_', '').replace('preguntaID', 'enunciadoAlternativa');
+        var enunciadoAlternativaName = respuestaCorrectaID.replace('Pregunta_', 'Pregunta[').replace('__respuestaCorrecta', '].enunciadoAlternativa');
+        var element = document.getElementById(respuestaCorrectaID);
+        var alternativaType = 2;
+        var type;
+        switch (alternativaType) {
+            case 1:
+                type = 'radio';
+                break;
+            case 2:
+                type = 'checkbox';
+                break;
+            default:
+                type = 'checkbox';
+        }
+        var parent = element.closest('.input-group');
+        parent.innerHTML += 
+            '<div class="input-group-prepend">' +
+            '<div class="input-group-text">' +
+            '<input type="' + type + '" id="' + respuestaCorrectaID + '" name="' + respuestaCorrectaName + '" />' +
+            '</div>' +
+            '</div>' +
+            '<input type="text" id="' + enunciadoAlternativaID + '" name="' + enunciadoAlternativaName + '" class="form-control" />';
+    };
+    function EliminarAlternativa(_id) {
+        var nuevoID = _id.replace('Boton_', '').replace('preguntaID', 'respuestaCorrecta');
+    };
+</script>
