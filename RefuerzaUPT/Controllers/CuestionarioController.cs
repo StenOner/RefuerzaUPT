@@ -46,9 +46,9 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         *
          * 
-         *
+         * 
+         * 
          */
         public ActionResult AgregarEditar(int _id)
         {
@@ -65,18 +65,64 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Guardar(Cuestionario _cuestionario)
         {
-            string[] allKeys = Request.Form.AllKeys;
-            //obtener valores de forms de igual nombre
-            string[] values = Request.Form.GetValues("Pregunta1");
-            if (ModelState.IsValid)
+            _cuestionario.temaID = 1;
+            _cuestionario.duracion = 60;
+            _cuestionario.intentos = 3;
+            _cuestionario.estado = true;
+            //string[] allKeys = Request.Form.AllKeys;
+            string[] guids = Request.Form.GetValues("Pregunta.Index");
+            try
             {
                 _cuestionario.Guardar();
+                foreach (string guid in guids)
+                {
+                    GuardarPregunta(_cuestionario, guid);
+                }
                 return Redirect("~/Cuestionario");
             }
-            else
+            catch (Exception)
             {
                 return View("~/Views/Cuestionario/AgregarEditar.cshtml", _cuestionario);
             }
+        }
+
+        /**
+         * 
+         * 
+         */
+        private void GuardarPregunta(Cuestionario _cuestionario, string _guid)
+        {
+            string preguntaID = $"Pregunta[{_guid}].preguntaID";
+            string tipoPreguntaID = $"Pregunta[{_guid}].tipoPreguntaID";
+            string enunciadoPregunta = $"Pregunta[{_guid}].enunciadoPregunta";
+            Pregunta nuevaPregunta = new Pregunta();
+            nuevaPregunta.preguntaID = Convert.ToInt32(Request.Form[preguntaID]);
+            nuevaPregunta.cuestionarioID = _cuestionario.cuestionarioID;
+            nuevaPregunta.tipoPreguntaID = Convert.ToInt32(Request.Form[tipoPreguntaID]);
+            nuevaPregunta.enunciadoPregunta = Request.Form[enunciadoPregunta];
+            nuevaPregunta.imagen = null;
+            nuevaPregunta.estado = true;
+            nuevaPregunta.Guardar();
+
+            GuardarAlternativa(nuevaPregunta, _guid);
+
+        }
+
+        /**
+         * 
+         * 
+         */
+        private void GuardarAlternativa(Pregunta _nuevaPregunta, string _guid)
+        {
+            string alternativaID = $"Pregunta[{_guid}].alternativaID";
+            string enunciadoAlternativa = $"Pregunta[{_guid}].enunciadoAlternativa";
+            Alternativa nuevaAlternativa = new Alternativa();
+            nuevaAlternativa.alternativaID = Convert.ToInt32(Request.Form[alternativaID]);
+            nuevaAlternativa.preguntaID = _nuevaPregunta.preguntaID;
+            nuevaAlternativa.enunciadoAlternativa = Request.Form[enunciadoAlternativa];
+            nuevaAlternativa.respuestaCorrecta = Convert.ToBoolean(Request.Form[alternativaID]);
+            nuevaAlternativa.estado = true;
+            nuevaAlternativa.Guardar();
         }
 
         /**

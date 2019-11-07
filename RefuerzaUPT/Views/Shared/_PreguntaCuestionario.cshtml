@@ -7,7 +7,6 @@
         listaAlternativas = new RefuerzaUPT.Models.Alternativa().ListarPorPregunta(Model.preguntaID);
     }
     catch (Exception) { }
-    Guid guid = Guid.NewGuid();
 }
 @using (Html.BeginCollectionItem("Pregunta"))
 {
@@ -16,6 +15,7 @@
             <h3 class="panel-title">
                 @Html.HiddenFor(m => m.preguntaID)
                 @Html.HiddenFor(m => m.tipoPreguntaID)
+                @Html.HiddenFor(m => m.cuestionarioID)
                 @Html.TextBoxFor(m => m.enunciadoPregunta, new { @class = "form-control" })
             </h3>
             @if (!string.IsNullOrEmpty(Model.imagen))
