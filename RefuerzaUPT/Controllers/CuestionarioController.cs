@@ -15,8 +15,6 @@ namespace RefuerzaUPT.Controllers
 
         /**
          * 
-         * 
-         * 
          */
         public ActionResult Index()
         {
@@ -24,8 +22,6 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         *
-         * 
          * 
          */
         public ActionResult Ver(int _id)
@@ -35,9 +31,6 @@ namespace RefuerzaUPT.Controllers
 
         /**
          * 
-         * 
-         * 
-         * 
          */
         public ActionResult ResolverCuestionario(int _id)
         {
@@ -46,8 +39,6 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         * 
-         * 
          * 
          */
         public ActionResult AgregarEditar(int _id)
@@ -59,9 +50,6 @@ namespace RefuerzaUPT.Controllers
 
         /**
          * 
-         * 
-         * 
-         * 
          */
         public ActionResult Guardar(Cuestionario _cuestionario)
         {
@@ -69,12 +57,21 @@ namespace RefuerzaUPT.Controllers
             _cuestionario.duracion = 60;
             _cuestionario.intentos = 3;
             _cuestionario.estado = true;
-            //string[] allKeys = Request.Form.AllKeys;
-            string[] guids = Request.Form.GetValues("Pregunta.Index");
+            string[] guidPreguntas = Request.Form.GetValues("Pregunta.Index");
             try
             {
                 _cuestionario.Guardar();
-                foreach (string guid in guids)
+                //int counterCuestionario = 0;
+                //using (IEnumerator<Pregunta> iteradorCuestionario = _cuestionario.Pregunta.GetEnumerator())
+                //{
+                //    while (iteradorCuestionario.MoveNext())
+                //    {
+                //        Pregunta actualPregunta = iteradorCuestionario.Current;
+                //        GuardarAlternativa(actualPregunta, guids[counterCuestionario]);
+                //        counterCuestionario++;
+                //    }
+                //}
+                foreach (string guid in guidPreguntas)
                 {
                     GuardarPregunta(_cuestionario, guid);
                 }
@@ -87,7 +84,6 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         * 
          * 
          */
         private void GuardarPregunta(Cuestionario _cuestionario, string _guid)
@@ -103,32 +99,36 @@ namespace RefuerzaUPT.Controllers
             nuevaPregunta.imagen = null;
             nuevaPregunta.estado = true;
             nuevaPregunta.Guardar();
-
-            GuardarAlternativa(nuevaPregunta, _guid);
-
+            try
+            {
+                GuardarAlternativa(nuevaPregunta, _guid);
+            }
+            catch (Exception) { }
         }
 
         /**
-         * 
          * 
          */
         private void GuardarAlternativa(Pregunta _nuevaPregunta, string _guid)
         {
-            string alternativaID = $"Pregunta[{_guid}].alternativaID";
-            string enunciadoAlternativa = $"Pregunta[{_guid}].enunciadoAlternativa";
-            Alternativa nuevaAlternativa = new Alternativa();
-            nuevaAlternativa.alternativaID = Convert.ToInt32(Request.Form[alternativaID]);
-            nuevaAlternativa.preguntaID = _nuevaPregunta.preguntaID;
-            nuevaAlternativa.enunciadoAlternativa = Request.Form[enunciadoAlternativa];
-            nuevaAlternativa.respuestaCorrecta = Convert.ToBoolean(Request.Form[alternativaID]);
-            nuevaAlternativa.estado = true;
-            nuevaAlternativa.Guardar();
+            List<string> alternativaIDsEnunciados = new List<string>();
+            alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].alternativaID"));
+            alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].enunciadoAlternativa"));
+            //alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].respuestaCorrecta"));
+
+            for (int i = 0; i < (alternativaIDsEnunciados.Count / 2); i++)
+            {
+                Alternativa nuevaAlternativa = new Alternativa();
+                nuevaAlternativa.alternativaID = Convert.ToInt32(alternativaIDsEnunciados[i]);
+                nuevaAlternativa.preguntaID = _nuevaPregunta.preguntaID;
+                nuevaAlternativa.enunciadoAlternativa = alternativaIDsEnunciados[(alternativaIDsEnunciados.Count / 2) + i];
+                nuevaAlternativa.respuestaCorrecta = Convert.ToBoolean(Request.Form[""]);
+                nuevaAlternativa.estado = true;
+                nuevaAlternativa.Guardar();
+            }
         }
 
         /**
-         * 
-         * 
-         * 
          * 
          */
         public ActionResult Eliminar(int _id)
@@ -140,9 +140,6 @@ namespace RefuerzaUPT.Controllers
 
         /**
          * 
-         * 
-         * 
-         * 
          */
         public ActionResult AgregarPregunta()
         {
@@ -150,9 +147,6 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         * 
-         * 
-         * 
          * 
          */
         public ActionResult EliminarPregunta(int _id = 0)
@@ -167,9 +161,6 @@ namespace RefuerzaUPT.Controllers
 
         /**
          * 
-         * 
-         * 
-         * 
          */
         public ActionResult AgregarAlternativa()
         {
@@ -177,9 +168,6 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         * 
-         * 
-         * 
          * 
          */
         public ActionResult EliminarAlternativa(int _id = 0)

@@ -1,26 +1,22 @@
 ﻿@using HtmlHelpers.BeginCollectionItem
 @model RefuerzaUPT.Models.Alternativa
 
-@using (Html.BeginCollectionItem("Alternativa"))
+@Html.HiddenFor(m => m.alternativaID)
+@if (Model.Pregunta.tipoPreguntaID == 2)
 {
-    @Html.HiddenFor(m => m.alternativaID)
-    if (Model.Pregunta.tipoPreguntaID == 2)
-    {
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                @Html.CheckBoxFor(m => m.respuestaCorrecta, Model.respuestaCorrecta)
-            </div>
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+            @Html.CheckBoxFor(m => m.respuestaCorrecta, new { @onchange = "CambiarValor(this)" })
         </div>
-        @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control" })
-    }
-    else
-    {
-        <div class="input-group-prepend">
-            <div class="input-group-text">
-                @Html.RadioButtonFor(m => m.respuestaCorrecta, Model.respuestaCorrecta)
-            </div>
+    </div>
+    @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control" })
+}
+else
+{
+    <div class="input-group-prepend">
+        <div class="input-group-text">
+            @Html.RadioButtonFor(m => m.respuestaCorrecta, Model.respuestaCorrecta, new { @onchange = "CambiarValor(this)" })
         </div>
-        @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control" })
-    }
-
+    </div>
+    @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control" })
 }
