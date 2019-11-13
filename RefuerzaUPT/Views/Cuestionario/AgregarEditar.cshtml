@@ -112,7 +112,8 @@ else
                 '<input type="hidden" id="' + alternativaID + '" name="' + alternativaName + '" value="0" />' +
                 '<div class="input-group-prepend">' +
                 '<div class="input-group-text">' +
-                '<input type="' + type + '" id="' + respuestaCorrectaID + '" name="' + respuestaCorrectaName + '" />' +
+                '<input type="' + type + '" id="' + respuestaCorrectaID + '" name="' + respuestaCorrectaName + '" value="false" onchange="CambiarValor(this)" />' +
+                '<input type="hidden" name ="' + respuestaCorrectaName + '" value="false" />' +
                 '</div>' +
                 '</div>' +
                 '<input type="text" id="' + enunciadoAlternativaID + '" name="' + enunciadoAlternativaName + '" class="form-control" />' +

@@ -66,6 +66,27 @@ namespace RefuerzaUPT.Models
             return listaCuestionario;
         }
 
+        public List<Cuestionario> ListarPorUsuario(int _id)
+        {
+            var listaCuestionario = new List<Cuestionario>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    listaCuestionario = db.Cuestionario
+                        .Include("Tema")
+                        .Include("Tema.Curso")
+                        .Where(x => x.Tema.Curso.usuarioID == _id)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaCuestionario;
+        }
+
         public List<Cuestionario> ListarPorCurso(int _id)
         {
             var listaCuestionario = new List<Cuestionario>();

@@ -1,7 +1,54 @@
-﻿
+﻿@model IEnumerable<RefuerzaUPT.Models.Cuestionario>
 @{
     ViewBag.Title = "Cuestionario";
 }
-
 <h2>Mis Cuestionarios</h2>
+<p>
+    @Html.ActionLink("Nuevo", "AgregarEditar")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            ID
+        </th>
+        <th>
+            Tema
+        </th>
+        <th>
+            Duracion
+        </th>
+        <th>
+            Intentos
+        </th>
+        <th>
+            Estado
+        </th>
+        <th></th>
+    </tr>
 
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.cuestionarioID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.temaID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.duracion)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.intentos)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.estado)
+            </td>
+            <td>
+                <a href="~/Cuestionario/AgregarEditar?_id=@item.cuestionarioID">Editar</a> |
+                <a href="~/Cuestionario/EliminarCuestionario?_id=@item.cuestionarioID">Eliminar</a>
+            </td>
+        </tr>
+    }
+
+</table>

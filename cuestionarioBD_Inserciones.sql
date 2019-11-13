@@ -43,10 +43,10 @@ INSERT INTO Cuestionario VALUES
 (1, 60, 3, 1);
 GO
 INSERT INTO Pregunta VALUES 
-(1,1,'PREGUNTA 1',null,1), 
+(2,1,'PREGUNTA 1',null,1), 
 (2,1,'PREGUNTA 2',null,1), 
-(1,1,'PREGUNTA 3',null,1), 
-(1,1,'PREGUNTA 4',null,1), 
+(2,1,'PREGUNTA 3',null,1), 
+(2,1,'PREGUNTA 4',null,1), 
 (2,1,'PREGUNTA 5',null,1);
 GO
 INSERT INTO Alternativa VALUES

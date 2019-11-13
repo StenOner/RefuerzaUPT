@@ -41,7 +41,7 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
-        public ActionResult AgregarEditar(int _id)
+        public ActionResult AgregarEditar(int _id = 0)
         {
             return View(
                 _id == 0 ? new Cuestionario()
@@ -114,15 +114,24 @@ namespace RefuerzaUPT.Controllers
             List<string> alternativaIDsEnunciados = new List<string>();
             alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].alternativaID"));
             alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].enunciadoAlternativa"));
-            //alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].respuestaCorrecta"));
 
-            for (int i = 0; i < (alternativaIDsEnunciados.Count / 2); i++)
+            List<string> respuestaCorrecta = Request.Form.GetValues($"Pregunta[{_guid}].respuestaCorrecta").ToList();
+            for (int i = 0; i < respuestaCorrecta.Count; i++)
+            {
+                alternativaIDsEnunciados.Add(respuestaCorrecta[i]);
+                if (respuestaCorrecta[i] == "true")
+                    i++;
+            }
+
+            int n = 3;
+
+            for (int i = 0; i < (alternativaIDsEnunciados.Count / n); i++)
             {
                 Alternativa nuevaAlternativa = new Alternativa();
                 nuevaAlternativa.alternativaID = Convert.ToInt32(alternativaIDsEnunciados[i]);
                 nuevaAlternativa.preguntaID = _nuevaPregunta.preguntaID;
-                nuevaAlternativa.enunciadoAlternativa = alternativaIDsEnunciados[(alternativaIDsEnunciados.Count / 2) + i];
-                nuevaAlternativa.respuestaCorrecta = Convert.ToBoolean(Request.Form[""]);
+                nuevaAlternativa.enunciadoAlternativa = alternativaIDsEnunciados[(alternativaIDsEnunciados.Count / n) + i];
+                nuevaAlternativa.respuestaCorrecta = Convert.ToBoolean(alternativaIDsEnunciados[(alternativaIDsEnunciados.Count / n) * 2 + i]);
                 nuevaAlternativa.estado = true;
                 nuevaAlternativa.Guardar();
             }

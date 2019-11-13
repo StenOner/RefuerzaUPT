@@ -199,7 +199,6 @@
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Layout.cshtml" />
-    <Content Include="Views\Cuestionario\Index.cshtml" />
     <Content Include="Views\Cuestionario\Ver.cshtml" />
     <Content Include="Views\Cuestionario\AgregarEditar.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
@@ -207,6 +206,7 @@
     <Content Include="Views\Cuestionario\Resolver.cshtml" />
     <Content Include="Views\Shared\_AlternativaPregunta.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
+    <Content Include="Views\Cuestionario\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
