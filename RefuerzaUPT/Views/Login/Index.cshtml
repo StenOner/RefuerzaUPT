@@ -1,34 +1,30 @@
-﻿
-@{
+﻿@{
     ViewBag.Title = "Login";
 }
+@using (Html.BeginForm("Validar", "Login", FormMethod.Post, new { @class = "login100-fom validate-form" }))
+{
+    <span class="login100-form-logo">
+        <i class="zmdi zmdi-landscape"></i>
+    </span>
 
-<div id="login">
-    <h1 class="page-header text-center">Login</h1>
+    <span class="login100-form-title p-b-34 p-t-27">
+        Log in
+    </span>
 
-    <div class="row">
-        <div class="col-xs-2"></div>
-        <div class="col-xs-8">
-            <div class="panel panel-default">
-                <div class="panel-body">
-                    @using (Html.BeginForm("Validar", "Login", FormMethod.Post))
-                    {
-                        <div class="form-group">
-                            <label>Correo</label>
-                            <input type="email" name="_correo" class="form-control" placeholder="Ingrese su correo" />
-                        </div>
-                        <div class="form-group">
-                            <label>Password</label>
-                            <input type="password" name="_clave" class="form-control" placeholder="Ingrese su clave" />
-                        </div>
-                        <div class="text-right">
-                            <button data-ajax="true" type="submit" class="btn btn-primary">
-                                Ingresar
-                            </button>
-                        </div>
-                    }
-                </div>
-            </div>
-        </div>
+    <div class="wrap-input100 validate-input" data-validate="Enter email">
+        <input class="input100" type="email" name="_correo" placeholder="Correo" />
+        <span class="focus-input100" data-placeholder="&#xf207;"></span>
     </div>
-</div>
+
+    <div class="wrap-input100 validate-input" data-validate="Enter password">
+        <input class="input100" type="password" name="_clave" placeholder="Clave" />
+        <span class="focus-input100" data-placeholder="&#xf191;"></span>
+    </div>
+
+    <div class="container-login100-form-btn">
+        <button data-ajax="true" type="submit" class="login100-form-btn">
+            Ingresar
+        </button>
+    </div>
+}
+<div id="dropDownSelect1"></div>

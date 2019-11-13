@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    string controller = ViewContext.RouteData.Values["controller"].ToString().ToLower();
     RefuerzaUPT.Models.Usuario usuario = new RefuerzaUPT.Models.Usuario().Obtener(RefuerzaUPT.Models.SessionHelper.GetUser());
 }
 <!DOCTYPE html>
@@ -10,37 +11,55 @@
     <!--Boostrap-->
     <link href="~/Content/bootswatch.css" rel="stylesheet" />
     <link href="~/Content/bootswatch.min.css" rel="stylesheet" />
+    <!--===============================================================================================-->
+    <link rel="icon" type="image/png" href="~/Assets/images/icons/favicon.ico" />
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/fonts/iconic/css/material-design-iconic-font.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/vendor/animate/animate.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/vendor/css-hamburgers/hamburgers.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/vendor/animsition/css/animsition.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/vendor/select2/select2.min.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/vendor/daterangepicker/daterangepicker.css">
+    <!--===============================================================================================-->
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/util.css">
+    <link rel="stylesheet" type="text/css" href="~/Assets/css/main.css">
+    <!--===============================================================================================-->
     <!--JQuery-->
     <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#">Navbar</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    @if (!controller.Equals("login"))
+    {
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" href="#">Navbar</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navbarColor01">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Pricing</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">About</a>
-                </li>
-            </ul>
-            <form class="form-inline my-2 my-lg-0">
-                <input class="form-control mr-sm-2" type="text" placeholder="Search">
-                <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-            </form>
-        </div>
-    </nav>
+            <div class="collapse navbar-collapse" id="navbarColor01">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="~/Cuestionario/Index">Mis Cursos<span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <ul class="navbar-nav my-2 my-lg-2">
+                    <li>
+                        <b></b>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="~/Login/logout">Cerrar Sesión</a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    }
     <br />
     <div class="row">
         <div class="col-md-1"></div>
@@ -57,5 +76,18 @@
     <script src="~/Scripts/jquery.form.js"></script>
     <script src="~/Scripts/jquery.validate.min.js"></script>
     <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/vendor/animsition/js/animsition.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/vendor/bootstrap/js/popper.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/vendor/select2/select2.min.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/vendor/daterangepicker/moment.min.js"></script>
+    <script src="~/Assets/vendor/daterangepicker/daterangepicker.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/vendor/countdowntime/countdowntime.js"></script>
+    <!--===============================================================================================-->
+    <script src="~/Assets/js/main.js"></script>
 </body>
 </html>
