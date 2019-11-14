@@ -2,6 +2,44 @@
 @{
     ViewBag.Title = "Ver";
 }
-
-<h2>Ver</h2>
-
+@if (Model == null)
+{
+    <center><h1>No se encontro el cuestionario</h1></center>
+}
+else
+{
+    <center><h2>@Model.Tema.Curso.nombre - @Model.Tema.nombre</h2></center>
+    <hr />
+    var preguntas = Model.Pregunta.GetEnumerator();
+    var counter = 1;
+    while (preguntas.MoveNext())
+    {
+        var pregunta = preguntas.Current;
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h3 class="panel-title">
+                    @counter. @pregunta.enunciadoPregunta
+                </h3>
+            </div>
+            <div class="panel-body">
+                @{
+                    var alternativas = pregunta.Alternativa.GetEnumerator();
+                    while (alternativas.MoveNext())
+                    {
+                        var alternativa = alternativas.Current;
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">
+                                    <input type="checkbox" />
+                                </div>
+                            </div>
+                            @alternativa.enunciadoAlternativa
+                        </div>
+                    }
+                }
+            </div>
+        </div>
+        <hr />
+        {counter++;}
+    }
+}

@@ -44,8 +44,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
-                        .Where(x => x.intentoCuestionarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.intentoCuestionarioID == _id && x.estado == true)
                         .ToList();
                 }
             }
@@ -64,8 +63,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
-                        .Where(x => x.cuestionarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.cuestionarioID == _id && x.estado == true)
                         .ToList();
                 }
             }
@@ -84,8 +82,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
-                        .Where(x => x.usuarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.usuarioID == _id && x.estado == true)
                         .ToList();
                 }
             }
@@ -104,8 +101,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     objetoIntentoCuestionario = db.IntentoCuestionario
-                        .Where(x => x.intentoCuestionarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.intentoCuestionarioID == _id && x.estado == true)
                         .SingleOrDefault();
                 }
             }

@@ -22,7 +22,7 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
-        public ActionResult Ver(int _id)
+        public ActionResult Ver(int _id = 0)
         {
             return View(objetoCuestionario.Obtener(_id));
         }

@@ -49,7 +49,7 @@ else
      */
     $('#AgregarPregunta').click(function () {
         var url = '@Url.Action("AgregarPregunta", "Cuestionario")';
-        $.get(url, function (response) {
+        $.post(url, function (response) {
             document.getElementById('Cuestionario').innerHTML += response;
         });
     });

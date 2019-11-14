@@ -31,8 +31,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaMedallaUsuario = db.MedallaUsuario
-                        .Where(x => x.usuarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.usuarioID == _id && x.estado == true)
                         .ToList();
                 }
             }
@@ -51,8 +50,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     objetoMedallaUsuario = db.MedallaUsuario
-                        .Where(x => x.medallaUsuarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.medallaUsuarioID == _id && x.estado == true)
                         .SingleOrDefault();
                 }
             }

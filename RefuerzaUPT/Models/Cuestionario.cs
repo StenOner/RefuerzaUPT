@@ -77,8 +77,7 @@ namespace RefuerzaUPT.Models
                     listaCuestionario = db.Cuestionario
                         .Include("Tema")
                         .Include("Tema.Curso")
-                        .Where(x => x.Tema.Curso.usuarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.Tema.Curso.usuarioID == _id && x.estado == true)
                         .ToList();
                 }
             }
@@ -99,8 +98,7 @@ namespace RefuerzaUPT.Models
                     listaCuestionario = db.Cuestionario
                         .Include("Tema")
                         .Include("Tema.Curso")
-                        .Where(x => x.Tema.Curso.cursoID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.Tema.Curso.cursoID == _id && x.estado == true)
                         .ToList();
                 }
             }
@@ -121,8 +119,9 @@ namespace RefuerzaUPT.Models
                     objetoCuestionario = db.Cuestionario
                         .Include("Tema")
                         .Include("Tema.Curso")
-                        .Where(x => x.cuestionarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Include("Pregunta")
+                        .Include("Pregunta.Alternativa")
+                        .Where(x => x.cuestionarioID == _id && x.estado == true)
                         .SingleOrDefault();
                 }
             }

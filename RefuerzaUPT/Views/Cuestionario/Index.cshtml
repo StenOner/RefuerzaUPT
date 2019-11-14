@@ -2,17 +2,18 @@
 @{
     ViewBag.Title = "Cuestionario";
 }
-<h2>Mis Cuestionarios</h2>
-<p>
-    @Html.ActionLink("Nuevo", "AgregarEditar")
-</p>
+<h2>
+    Mis Cuestionarios
+    <a class="btn btn-outline-primary" href="~/Cuestionario/AgregarEditar">Nuevo</a>
+</h2>
+<br />
 <table class="table">
     <tr>
         <th>
-            ID
+            #
         </th>
         <th>
-            Tema
+            Curso - Tema
         </th>
         <th>
             Duracion
@@ -23,7 +24,9 @@
         <th>
             Estado
         </th>
-        <th></th>
+        <th>
+            Acciones
+        </th>
     </tr>
     @foreach (var item in Model)
     {
@@ -32,7 +35,7 @@
                 @Html.DisplayFor(modelItem => item.cuestionarioID)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.temaID)
+                @Html.DisplayFor(modelItem => item.Tema.Curso.nombre) - @Html.DisplayFor(modelItem => item.Tema.nombre)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.duracion)
@@ -44,10 +47,21 @@
                 @Html.DisplayFor(modelItem => item.estado)
             </td>
             <td>
-                <a href="~/Cuestionario/AgregarEditar?_id=@item.cuestionarioID">Editar</a> |
-                <a href="~/Cuestionario/EliminarCuestionario?_id=@item.cuestionarioID">Eliminar</a>
+                <a class="btn btn-outline-info" href="~/Cuestionario/Ver?_id=@item.cuestionarioID">Ver</a>
+                <a class="btn btn-outline-warning" href="~/Cuestionario/AgregarEditar?_id=@item.cuestionarioID">Editar</a>
+                <a class="btn btn-outline-danger" onclick="EliminarCuestionario(@item.cuestionarioID)" href="#">Eliminar</a>
             </td>
         </tr>
     }
-
 </table>
+<script type="text/javascript">
+    function EliminarCuestionario(_item) {
+        var url = '/Cuestionario/Eliminar?_id=' + _item;
+        var response = confirm("Estas seguro que quieres eliminar este cuestionario?");
+        if (response) {
+            $.post(url, function () {
+                window.location.reload();
+            });
+        }
+    };
+</script>
