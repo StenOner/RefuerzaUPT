@@ -6,7 +6,7 @@ INSERT INTO TipoUsuario VALUES
 GO
 INSERT INTO TipoPregunta VALUES
 ('Respuesta Unica', 1),
-('Respuesta Multiple', 1),
+('Respuesta Multiple', 1);
 GO
 INSERT INTO Usuario VALUES
 (2,'Leonardo Acevedo', '2014047512', 'leoacevedo@upt.pe', '1234', 1),

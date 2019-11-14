@@ -51,7 +51,7 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
-        public ActionResult Guardar(Cuestionario _cuestionario)
+        public ActionResult Guardar([Bind(Exclude = "Pregunta")]Cuestionario _cuestionario)
         {
             _cuestionario.temaID = 1;
             _cuestionario.duracion = 60;
@@ -84,7 +84,8 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         * 
+         * param @_cuestionario
+         * param @_guid
          */
         private void GuardarPregunta(Cuestionario _cuestionario, string _guid)
         {
@@ -107,7 +108,8 @@ namespace RefuerzaUPT.Controllers
         }
 
         /**
-         * 
+         * param @_nuevaPregunta
+         * param @_guid
          */
         private void GuardarAlternativa(Pregunta _nuevaPregunta, string _guid)
         {
