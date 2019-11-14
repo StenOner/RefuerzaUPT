@@ -10,8 +10,6 @@ namespace RefuerzaUPT.Controllers
     public class CuestionarioController : Controller
     {
         private Cuestionario objetoCuestionario = new Cuestionario();
-        private Pregunta objetoPregunta = new Pregunta();
-        private Alternativa objetoAlternativa = new Alternativa();
 
         /**
          * 
@@ -144,8 +142,14 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Eliminar(int _id)
         {
-            objetoCuestionario.cuestionarioID = _id;
-            objetoCuestionario.Eliminar();
+            //objetoCuestionario.cuestionarioID = _id;
+            //objetoCuestionario.Eliminar();
+            if (_id > 0)
+            {
+                Cuestionario cuestionario = new Cuestionario().Obtener(_id);
+                cuestionario.estado = false;
+                cuestionario.Guardar();
+            }
             return Redirect("~/Cuestionario");
         }
 
@@ -162,10 +166,16 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult EliminarPregunta(int _id = 0)
         {
+            //if (_id > 0)
+            //{
+            //    objetoPregunta.preguntaID = _id;
+            //    objetoPregunta.Eliminar();
+            //}
             if (_id > 0)
             {
-                objetoPregunta.preguntaID = _id;
-                objetoPregunta.Eliminar();
+                Pregunta pregunta = new Pregunta().Obtener(_id);
+                pregunta.estado = false;
+                pregunta.Guardar();
             }
             return Json("Eliminado");
         }
@@ -183,10 +193,16 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult EliminarAlternativa(int _id = 0)
         {
+            //if (_id > 0)
+            //{
+            //    objetoAlternativa.alternativaID = _id;
+            //    objetoAlternativa.Eliminar();
+            //}
             if (_id > 0)
             {
-                objetoAlternativa.alternativaID = _id;
-                objetoAlternativa.Eliminar();
+                Alternativa alternativa = new Alternativa().Obtener(_id);
+                alternativa.estado = false;
+                alternativa.Guardar();
             }
             return Json("Eliminado");
         }

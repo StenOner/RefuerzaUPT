@@ -56,6 +56,7 @@ namespace RefuerzaUPT.Models
                     listaCuestionario = db.Cuestionario
                         .Include("Tema")
                         .Include("Tema.Curso")
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -77,6 +78,7 @@ namespace RefuerzaUPT.Models
                         .Include("Tema")
                         .Include("Tema.Curso")
                         .Where(x => x.Tema.Curso.usuarioID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -98,6 +100,7 @@ namespace RefuerzaUPT.Models
                         .Include("Tema")
                         .Include("Tema.Curso")
                         .Where(x => x.Tema.Curso.cursoID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -119,6 +122,7 @@ namespace RefuerzaUPT.Models
                         .Include("Tema")
                         .Include("Tema.Curso")
                         .Where(x => x.cuestionarioID == _id)
+                        .Where(x => x.estado == true)
                         .SingleOrDefault();
                 }
             }

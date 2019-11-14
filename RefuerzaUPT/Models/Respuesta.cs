@@ -44,6 +44,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaRespuesta = db.Respuesta
                         .Where(x => x.intentoCuestionarioID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -63,6 +64,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaRespuesta = db.Respuesta
                         .Where(x => x.preguntaID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -73,15 +75,16 @@ namespace RefuerzaUPT.Models
             return listaRespuesta;
         }
 
-        public CuestionarioBloqueado Obtener(int _id)
+        public Respuesta Obtener(int _id)
         {
-            var objetoCuestionarioBloqueado = new CuestionarioBloqueado();
+            var objetoRespuesta = new Respuesta();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    objetoCuestionarioBloqueado = db.CuestionarioBloqueado
-                        .Where(x => x.cuestionarioBloqueadoID == _id)
+                    objetoRespuesta = db.Respuesta
+                        .Where(x => x.respuestaID == _id)
+                        .Where(x => x.estado == true)
                         .SingleOrDefault();
                 }
             }
@@ -89,7 +92,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return objetoCuestionarioBloqueado;
+            return objetoRespuesta;
         }
 
         public void Guardar()

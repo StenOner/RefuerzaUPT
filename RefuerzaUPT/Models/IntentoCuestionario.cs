@@ -45,6 +45,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
                         .Where(x => x.intentoCuestionarioID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -64,6 +65,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
                         .Where(x => x.cuestionarioID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -83,6 +85,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
                         .Where(x => x.usuarioID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -93,15 +96,16 @@ namespace RefuerzaUPT.Models
             return listaIntentoCuestionario;
         }
 
-        public CuestionarioBloqueado Obtener(int _id)
+        public IntentoCuestionario Obtener(int _id)
         {
-            var objetoCuestionarioBloqueado = new CuestionarioBloqueado();
+            var objetoIntentoCuestionario = new IntentoCuestionario();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    objetoCuestionarioBloqueado = db.CuestionarioBloqueado
-                        .Where(x => x.cuestionarioBloqueadoID == _id)
+                    objetoIntentoCuestionario = db.IntentoCuestionario
+                        .Where(x => x.intentoCuestionarioID == _id)
+                        .Where(x => x.estado == true)
                         .SingleOrDefault();
                 }
             }
@@ -109,7 +113,7 @@ namespace RefuerzaUPT.Models
             {
                 Console.WriteLine(ex.ToString());
             }
-            return objetoCuestionarioBloqueado;
+            return objetoIntentoCuestionario;
         }
 
         public void Guardar()

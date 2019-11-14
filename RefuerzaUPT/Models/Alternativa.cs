@@ -45,6 +45,7 @@ namespace RefuerzaUPT.Models
                     listaAlternativa = db.Alternativa
                         .Include("Pregunta")
                         .Where(x => x.preguntaID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -65,6 +66,7 @@ namespace RefuerzaUPT.Models
                     objetoAlternativa = db.Alternativa
                         .Include("Pregunta")
                         .Where(x => x.alternativaID == _id)
+                        .Where(x => x.estado == true)
                         .SingleOrDefault();
                 }
             }

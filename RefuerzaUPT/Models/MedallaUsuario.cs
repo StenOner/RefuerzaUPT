@@ -32,6 +32,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaMedallaUsuario = db.MedallaUsuario
                         .Where(x => x.usuarioID == _id)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -51,6 +52,7 @@ namespace RefuerzaUPT.Models
                 {
                     objetoMedallaUsuario = db.MedallaUsuario
                         .Where(x => x.medallaUsuarioID == _id)
+                        .Where(x => x.estado == true)
                         .SingleOrDefault();
                 }
             }
