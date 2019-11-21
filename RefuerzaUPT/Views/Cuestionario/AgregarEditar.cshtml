@@ -1,6 +1,8 @@
 ﻿@model RefuerzaUPT.Models.Cuestionario
 @{
     ViewBag.Title = "Agregar";
+    int defaultIntentos = 3;
+    int defaultDuracion = 60;
     List<RefuerzaUPT.Models.Pregunta> listaPreguntas = new List<RefuerzaUPT.Models.Pregunta>();
     try
     {
@@ -27,6 +29,23 @@ else
     {
         <div id="Cuestionario">
             @Html.HiddenFor(m => m.cuestionarioID)
+            <div class="row">
+                <div class="col-sm-1">
+                    Duracion (minutos)
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" id="duracion" name="duracion" value="@(Model.duracion > 0 ? Model.duracion : defaultDuracion)" min="15" max="180" required />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1">
+                    Intentos
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" id="intentos" name="intentos" value="@(Model.intentos > 0 ? Model.intentos : defaultIntentos)" min="1" required />
+                </div>
+            </div>
+            <hr />
             @foreach (var item in listaPreguntas)
             {
                 @Html.Partial("_PreguntaCuestionario", item);
@@ -82,7 +101,7 @@ else
 
         /**
          *
-         * @@param _id 
+         * @@param _id
          */
         function AgregarAlternativa(_id) {
             var respuestaCorrectaID = _id.replace('Boton_', '').replace('preguntaID', 'respuestaCorrecta');
@@ -125,7 +144,23 @@ else
          * @@param _id
          */
         function EliminarAlternativa(_id) {
-            var nuevoID = _id.replace('Boton_', '').replace('preguntaID', 'respuestaCorrecta');
+            var newID = _id.replace('Boton_', '');
+            var value = document.getElementById(newID).value;
+            var url = '@Url.Action("EliminarAlternativa", "Cuestionario")';
+            $.ajax({
+                type: "POST",
+                async: false,
+                data: { _id: value },
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                    document.getElementById(_id).disabled = true;
+                    document.getElementById(newID).disabled = true;
+                    document.getElementById(newID.replace('alternativaID', 'respuestaCorrecta')).disabled = true;
+                    document.getElementById(newID.replace('alternativaID', 'respuestaCorrecta')).closest('.input-group-text').children[1].disabled = true;
+                    document.getElementById(newID.replace('alternativaID', 'enunciadoAlternativa')).disabled = true;
+                }
+            });
         };
 
         /**

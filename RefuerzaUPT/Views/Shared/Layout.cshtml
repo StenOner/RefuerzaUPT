@@ -50,11 +50,13 @@
                     </li>
                 </ul>
                 <ul class="navbar-nav my-2 my-lg-2">
-                    <li>
-                        <b></b>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="~/Login/logout">Cerrar Sesión</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            @usuario.nombre
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="~/Login/logout">Logout</a>
+                        </div>
                     </li>
                 </ul>
             </div>

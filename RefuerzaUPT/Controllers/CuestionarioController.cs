@@ -52,8 +52,6 @@ namespace RefuerzaUPT.Controllers
         public ActionResult Guardar([Bind(Exclude = "Pregunta")]Cuestionario _cuestionario)
         {
             _cuestionario.temaID = 1;
-            _cuestionario.duracion = 60;
-            _cuestionario.intentos = 3;
             _cuestionario.estado = true;
             string[] guidPreguntas = Request.Form.GetValues("Pregunta.Index");
             try

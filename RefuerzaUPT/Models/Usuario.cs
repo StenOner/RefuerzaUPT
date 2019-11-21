@@ -67,8 +67,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     objetoUsuario = db.Usuario
-                        .Where(x => x.usuarioID == _id)
-                        .Where(x => x.estado == true)
+                        .Where(x => x.usuarioID == _id && x.estado == true)
                         .SingleOrDefault();
                 }
             }
@@ -92,8 +91,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     var objetoUsuario = db.Usuario
-                        .Where(x => x.correo.Equals(_correo) && x.clave.Equals(_clave))
-                        .Where(x => x.estado == true)
+                        .Where(x => x.correo.Equals(_correo) && x.clave.Equals(_clave) && x.estado == true)
                         .SingleOrDefault();
 
                     if (objetoUsuario != null)
