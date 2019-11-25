@@ -122,7 +122,7 @@ CREATE TABLE Respuesta(
     cuestionarioID INT NOT NULL,
     intentoCuestionarioID INT NOT NULL,
     preguntaID INT NOT NULL,
-    alternativaID INT NOT NULL,
+    alternativaID INT,
     usuarioID INT NOT NULL,
     estado BIT NOT NULL,
     PRIMARY KEY (respuestaID),

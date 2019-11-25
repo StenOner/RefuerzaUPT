@@ -325,6 +325,7 @@
     <Content Include="Views\Shared\_AlternativaPregunta.cshtml" />
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\Cuestionario\Index.cshtml" />
+    <Content Include="Views\Cuestionario\Intento.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

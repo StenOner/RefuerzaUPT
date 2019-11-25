@@ -36,7 +36,7 @@ namespace RefuerzaUPT.Filters
             {
                 filterContext.Result = new RedirectToRouteResult(new RouteValueDictionary(new
                 {
-                    controller = "Home",
+                    controller = "Cuestionario",
                     action = "Index"
                 }));
             }

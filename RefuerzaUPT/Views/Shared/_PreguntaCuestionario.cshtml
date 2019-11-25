@@ -1,6 +1,7 @@
 ﻿@using HtmlHelpers.BeginCollectionItem
 @model RefuerzaUPT.Models.Pregunta
 @{
+    RefuerzaUPT.Models.Usuario usuario = new RefuerzaUPT.Models.Usuario().Obtener(RefuerzaUPT.Models.SessionHelper.GetUser());
     List<RefuerzaUPT.Models.Alternativa> listaAlternativas = new List<RefuerzaUPT.Models.Alternativa>();
     try
     {
@@ -16,7 +17,17 @@
                 @Html.HiddenFor(m => m.preguntaID)
                 @Html.HiddenFor(m => m.tipoPreguntaID)
                 @Html.HiddenFor(m => m.cuestionarioID)
-                @Html.TextBoxFor(m => m.enunciadoPregunta, new { @class = "form-control" })
+                @if (usuario.tipoUsuarioID == 1)
+                {
+                    @Html.TextBoxFor(m => m.enunciadoPregunta, new { @class = "form-control" })
+                }
+                else
+                {
+                    @(Session["Contador"] + ". " + Html.DisplayFor(m => m.enunciadoPregunta, new { @class = "form-control" }))
+                    {
+                        Session["Contador"] = Convert.ToInt32(Session["Contador"]) + 1;
+                    }
+                }
             </h3>
             @if (!string.IsNullOrEmpty(Model.imagen))
             {
@@ -33,7 +44,10 @@
                 }
             </div>
             <br />
-            <input type="button" class="btn btn-outline-info" id="Boton_@Html.IdFor(m => m.preguntaID)" onclick="AgregarAlternativa(this.id)" value="Agregar" />
+            @if (usuario.tipoUsuarioID == 1)
+            {
+                <input type="button" class="btn btn-outline-info" id="Boton_@Html.IdFor(m => m.preguntaID)" onclick="AgregarAlternativa(this.id)" value="Agregar" />
+            }
         </div>
     </div>
     <br />

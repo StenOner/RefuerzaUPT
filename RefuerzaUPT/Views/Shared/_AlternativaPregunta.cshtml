@@ -1,6 +1,7 @@
 ﻿@using HtmlHelpers.BeginCollectionItem
 @model RefuerzaUPT.Models.Alternativa
 @{
+    RefuerzaUPT.Models.Usuario usuario = new RefuerzaUPT.Models.Usuario().Obtener(RefuerzaUPT.Models.SessionHelper.GetUser());
     Guid guid = Guid.NewGuid();
 }
 @Html.HiddenFor(m => m.alternativaID, new { @id = "Alternativa_" + guid + "__alternativaID" })
@@ -8,9 +9,24 @@
 {
     <div class="input-group-prepend">
         <div class="input-group-text">
-            @Html.CheckBoxFor(m => m.respuestaCorrecta, new { @onchange = "CambiarValor(this)", @id = "Alternativa_" + guid + "__respuestaCorrecta" })
+            @if (usuario.tipoUsuarioID == 1)
+            {
+                @Html.CheckBoxFor(m => m.respuestaCorrecta, new { @onchange = "CambiarValor(this)", @id = "Alternativa_" + guid + "__respuestaCorrecta" })
+            }
+            else
+            {
+                <input type="checkbox" id="Alternativa_@(guid)__respuestaCorrecta" name="@Html.NameFor(m => m.respuestaCorrecta)" onchange="CambiarValor(this)" value="false" />
+                @*<input type="hidden" name="@Html.NameFor(m => m.respuestaCorrecta)" value="false" />*@
+            }
         </div>
     </div>
-    @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @id = "Alternativa_" + guid + "__enunciadoAlternativa" })
-    <input type="button" class="btn btn-outline-danger" id="Boton_@("Alternativa_" + guid + "__alternativaID")" onclick="EliminarAlternativa(this.id)" value="Eliminar" />
+    if (usuario.tipoUsuarioID == 1)
+    {
+        @Html.TextBoxFor(m => m.enunciadoAlternativa, new { @class = "form-control", @id = "Alternativa_" + guid + "__enunciadoAlternativa" })
+        <input type="button" class="btn btn-outline-danger" id="Boton_@("Alternativa_" + guid + "__alternativaID")" onclick="EliminarAlternativa(this.id)" value="Eliminar" />
+    }
+    else
+    {
+        @Html.DisplayFor(m => m.enunciadoAlternativa, new { @class = "form-control", @id = "Alternativa_" + guid + "__enunciadoAlternativa" })
+    }
 }

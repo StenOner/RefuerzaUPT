@@ -5,6 +5,7 @@ namespace RefuerzaUPT.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Curso")]
     public partial class Curso
@@ -29,5 +30,43 @@ namespace RefuerzaUPT.Models
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Tema> Tema { get; set; }
+
+        public List<Curso> ListarMisCursos(int _id)
+        {
+            var listaCurso = new List<Curso>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    listaCurso = db.Curso
+                        .Where(x => x.usuarioID == _id && x.estado == true)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaCurso;
+        }
+
+        public List<Curso> Listar()
+        {
+            var listaCurso = new List<Curso>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    listaCurso = db.Curso
+                        .Where(x => x.estado == true)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaCurso;
+        }
     }
 }

@@ -5,6 +5,7 @@ namespace RefuerzaUPT.Models
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Data.Entity.Spatial;
+    using System.Linq;
 
     [Table("Tema")]
     public partial class Tema
@@ -29,5 +30,24 @@ namespace RefuerzaUPT.Models
         public virtual ICollection<Cuestionario> Cuestionario { get; set; }
 
         public virtual Curso Curso { get; set; }
+
+        public List<Tema> ListarporCurso(int _id)
+        {
+            var listaTema = new List<Tema>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    listaTema = db.Tema
+                        .Where(x => x.cursoID == _id && x.estado == true)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaTema;
+        }
     }
 }

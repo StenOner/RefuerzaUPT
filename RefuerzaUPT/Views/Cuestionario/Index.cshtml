@@ -1,60 +1,128 @@
 ﻿@model IEnumerable<RefuerzaUPT.Models.Cuestionario>
 @{
     ViewBag.Title = "Cuestionario";
+    RefuerzaUPT.Models.Usuario usuario = new RefuerzaUPT.Models.Usuario().Obtener(RefuerzaUPT.Models.SessionHelper.GetUser());
 }
 <h2>
     Mis Cuestionarios
-    <a class="btn btn-outline-primary" href="~/Cuestionario/AgregarEditar">Nuevo</a>
 </h2>
 <br />
-<table class="table">
-    <tr>
-        <th>
-            #
-        </th>
-        <th>
-            Curso - Tema
-        </th>
-        <th>
-            Duracion
-        </th>
-        <th>
-            Intentos
-        </th>
-        <th>
-            Estado
-        </th>
-        <th>
-            Acciones
-        </th>
-    </tr>
-    @foreach (var item in Model)
+@if (usuario.tipoUsuarioID == 1)
+{
+    foreach (var curso in ViewBag.misCursos)
     {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.cuestionarioID)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tema.Curso.nombre) - @Html.DisplayFor(modelItem => item.Tema.nombre)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.duracion)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.intentos)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.estado)
-            </td>
-            <td>
-                <a class="btn btn-outline-info" href="~/Cuestionario/Ver?_id=@item.cuestionarioID">Ver</a>
-                <a class="btn btn-outline-warning" href="~/Cuestionario/AgregarEditar?_id=@item.cuestionarioID">Editar</a>
-                <a class="btn btn-outline-danger" onclick="EliminarCuestionario(@item.cuestionarioID)" href="#">Eliminar</a>
-            </td>
-        </tr>
+        <h3>
+            @curso.nombre
+            <a class="btn btn-outline-primary" href="~/Cuestionario/AgregarEditar?_cursoID=@curso.cursoID">Nuevo</a>
+        </h3>
+        <table class="table">
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Tema
+                </th>
+                <th>
+                    Duracion (minutos)
+                </th>
+                <th>
+                    Intentos
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                if (item.Tema.cursoID == curso.cursoID)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cuestionarioID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tema.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.duracion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.intentos)
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-info" href="~/Cuestionario/Ver?_id=@item.cuestionarioID">Ver</a>
+                            <a class="btn btn-outline-warning" href="~/Cuestionario/AgregarEditar?_id=@item.cuestionarioID">Editar</a>
+                            <a class="btn btn-outline-danger" onclick="EliminarCuestionario(@item.cuestionarioID)" href="#">Eliminar</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
     }
-</table>
+}
+else
+{
+    <span>no eres prosor</span>
+    foreach (var curso in ViewBag.cursos)
+    {
+        <h3>
+            @curso.nombre
+        </h3>
+        <table class="table">
+            <tr>
+                <th>
+                    #
+                </th>
+                <th>
+                    Tema
+                </th>
+                <th>
+                    Duracion (minutos)
+                </th>
+                <th>
+                    Intentos/Total
+                </th>
+                <th>
+                    Estado
+                </th>
+                <th>
+                    Acciones
+                </th>
+            </tr>
+            @foreach (var item in Model)
+            {
+                if (item.Tema.cursoID == curso.cursoID)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.cuestionarioID)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Tema.nombre)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.duracion)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.intentos)
+                        </td>
+                        <td>
+                            No intento
+                        </td>
+                        <td>
+                            <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo Intento</a>
+                        </td>
+                    </tr>
+                }
+            }
+        </table>
+    }
+}
 <script type="text/javascript">
+    function ConfirmarNuevoIntento() {
+        return confirm('Estas seguro que quieres empezar un nuevo intento?');
+    };
     function EliminarCuestionario(_item) {
         var url = '/Cuestionario/Eliminar?_id=' + _item;
         var response = confirm("Estas seguro que quieres eliminar este cuestionario?");

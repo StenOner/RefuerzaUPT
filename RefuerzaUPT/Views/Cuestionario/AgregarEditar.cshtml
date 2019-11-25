@@ -3,6 +3,11 @@
     ViewBag.Title = "Agregar";
     int defaultIntentos = 3;
     int defaultDuracion = 60;
+    List<SelectListItem> selectListTemas = new List<SelectListItem>();
+    foreach (var tema in ViewBag.Temas)
+    {
+        selectListTemas.Add(new SelectListItem() { Text = tema.nombre, Value = tema.temaID.ToString() });
+    }
     List<RefuerzaUPT.Models.Pregunta> listaPreguntas = new List<RefuerzaUPT.Models.Pregunta>();
     try
     {
@@ -24,17 +29,25 @@ else
     {
         <center><h1>Nuevo Cuestionario</h1></center>
     }
-
+    <hr />
     using (Html.BeginForm("Guardar", "Cuestionario", FormMethod.Post, new { id = "frm-cuestionario" }))
     {
         <div id="Cuestionario">
             @Html.HiddenFor(m => m.cuestionarioID)
             <div class="row">
                 <div class="col-sm-1">
-                    Duracion (minutos)
+                    Tema
                 </div>
                 <div class="col">
-                    <input type="number" class="form-control" id="duracion" name="duracion" value="@(Model.duracion > 0 ? Model.duracion : defaultDuracion)" min="15" max="180" required />
+                    @Html.DropDownListFor(x => x.temaID, selectListTemas, " Seleccione un tema ", new { @class = "form-control", @required = "true", @onchange = "GuardarEnSession()" })
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-1">
+                    Duracion
+                </div>
+                <div class="col">
+                    <input type="number" class="form-control" id="duracion" name="duracion" value="@(Model.duracion > 0 ? Model.duracion : defaultDuracion)" min="10" max="180" required />
                 </div>
             </div>
             <div class="row">
@@ -68,9 +81,17 @@ else
      */
     $('#AgregarPregunta').click(function () {
         var url = '@Url.Action("AgregarPregunta", "Cuestionario")';
-        $.post(url, function (response) {
-            document.getElementById('Cuestionario').innerHTML += response;
+        $.ajax({
+            type: "POST",
+            async: true,
+            url: url,
+            success: function (response) {
+                document.getElementById('Cuestionario').innerHTML += response;
+            }
         });
+        //$.post(url, function (response) {
+        //    document.getElementById('Cuestionario').innerHTML += response;
+        //});
     });
 
     /**
@@ -149,7 +170,7 @@ else
             var url = '@Url.Action("EliminarAlternativa", "Cuestionario")';
             $.ajax({
                 type: "POST",
-                async: false,
+                async: true,
                 data: { _id: value },
                 url: url,
                 success: function (response) {
@@ -169,6 +190,24 @@ else
          */
         function CambiarValor(_elemento) {
             _elemento.checked ? _elemento.value = "true" : _elemento.value = "false";
+        };
+
+        /**
+         *
+         *
+         */
+        function GuardarEnSession() {
+            var temaID = document.getElementById('temaID').value;
+            var url = '@Url.Action("GuardarTemaEnSession", "Cuestionario")';
+            $.ajax({
+                type: "POST",
+                async: true,
+                data: { _temaID: temaID },
+                url: url,
+                success: function (response) {
+                    console.log(response);
+                }
+            });
         };
     </script>
 }
