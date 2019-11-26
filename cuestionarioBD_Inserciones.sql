@@ -23,20 +23,20 @@ INSERT INTO Curso VALUES
 (6, 'Inteligencia de Negocio', 1);
 GO
 INSERT INTO Tema VALUES
-(1, 'Tema 1', 1),
-(1, 'Tema 2', 1),
-(1, 'Tema 3', 1),
-(1, 'Tema 4', 1),
-(2, 'Tema 1', 1),
-(2, 'Tema 2', 1),
-(2, 'Tema 3', 1),
-(3, 'Tema 1', 1),
-(3, 'Tema 2', 1),
-(3, 'Tema 3', 1),
-(3, 'Tema 4', 1),
-(3, 'Tema 5', 1),
-(4, 'Tema 1', 1),
-(4, 'Tema 2', 1);
+(1, 'Tema P3 1', 1),
+(1, 'Tema P3 2', 1),
+(1, 'Tema P3 3', 1),
+(1, 'Tema P3 4', 1),
+(2, 'Tema Moviles 1', 1),
+(2, 'Tema Moviles 2', 1),
+(2, 'Tema Moviles 3', 1),
+(3, 'Tema C2 1', 1),
+(3, 'Tema C2 2', 1),
+(3, 'Tema C2 3', 1),
+(3, 'Tema C2 4', 1),
+(3, 'Tema C2 5', 1),
+(4, 'Tema Inteligencia 1', 1),
+(4, 'Tema Inteligencia 2', 1);
 GO
 INSERT INTO Cuestionario VALUES
 (1, 60, 3, 1),

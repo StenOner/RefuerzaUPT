@@ -18,7 +18,6 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult Index()
         {
-            Session["Tema"] = null;
             ViewBag.misCursos = new Curso().ListarMisCursos(SessionHelper.GetUser());
             ViewBag.cursos = new Curso().Listar();
             return View(objetoCuestionario.Listar());
@@ -45,7 +44,10 @@ namespace RefuerzaUPT.Controllers
          */
         public ActionResult AgregarEditar(int _id = 0, int _cursoID = 0)
         {
-            ViewBag.temas = new Tema().ListarporCurso(_cursoID);
+            if (_id > 0)
+                ViewBag.temas = new Tema().ListarporCurso(objetoCuestionario.Obtener(_id).Tema.cursoID);
+            else
+                ViewBag.temas = new Tema().ListarporCurso(_cursoID);
             return View(
                 _id == 0 ? new Cuestionario()
                 : objetoCuestionario.Obtener(_id));
@@ -67,23 +69,76 @@ namespace RefuerzaUPT.Controllers
         public ActionResult GuardarIntento(Cuestionario _cuestionario)
         {
             string[] guidPreguntas = Request.Form.GetValues("Pregunta.Index");
-            IntentoCuestionario nuevoIntentoCuestionario = new IntentoCuestionario
-            {
-                cuestionarioID = _cuestionario.cuestionarioID,
-                usuarioID = SessionHelper.GetUser(),
-                nota = 0,
-                tiempoResolucion = _cuestionario.duracion - Convert.ToInt32(Request.Form["tiempoRestante"]),
-                estado = true
-            };
-            nuevoIntentoCuestionario.Guardar();
             try
             {
+                IntentoCuestionario nuevoIntentoCuestionario = new IntentoCuestionario
+                {
+                    cuestionarioID = _cuestionario.cuestionarioID,
+                    usuarioID = SessionHelper.GetUser(),
+                    nota = 0,
+                    tiempoResolucion = _cuestionario.duracion - Convert.ToInt32(Request.Form["tiempoRestante"]),
+                    estado = true
+                };
+                nuevoIntentoCuestionario.Guardar();
                 foreach (string guid in guidPreguntas)
                 {
                     GuardarRespuesta(nuevoIntentoCuestionario, guid);
                 }
+                nuevoIntentoCuestionario.nota = CalcularNota(nuevoIntentoCuestionario);
+                nuevoIntentoCuestionario.Guardar();
             }catch (Exception) { }
             return Redirect("~/Cuestionario");
+        }
+
+        /**
+         * 
+         */
+        public double CalcularNota(IntentoCuestionario _nuevoIntentoCuestionario)
+        {
+            double nota = 0;
+            double puntajePregunta = 0;
+            double notaMaxima = 20;
+            puntajePregunta = CalcularPuntajePregunta(_nuevoIntentoCuestionario, notaMaxima);
+            IntentoCuestionario intentoCuestionario = new IntentoCuestionario().Obtener(_nuevoIntentoCuestionario.intentoCuestionarioID);
+            using (IEnumerator<Respuesta> iteradorRespuesta = intentoCuestionario.Respuesta.GetEnumerator())
+            {
+                while (iteradorRespuesta.MoveNext())
+                {
+                    double puntajeAlternativa = 0;
+                    Respuesta respuesta = iteradorRespuesta.Current;
+                    puntajeAlternativa = (puntajePregunta / (new Respuesta().ListarPorPregunta(respuesta.preguntaID, respuesta.intentoCuestionarioID).Count));
+                    Alternativa alternativa = new Alternativa().Obtener((int)respuesta.alternativaID);
+                    if (respuesta.alternativaRespuesta == alternativa.respuestaCorrecta)
+                        nota += puntajeAlternativa;
+                    else
+                        nota -= puntajeAlternativa;
+                }
+            }
+            if (nota < 0)
+                nota = 0;
+            return Math.Round(nota, 2);
+        }
+
+        /**
+         * 
+         */
+        private double CalcularPuntajePregunta(IntentoCuestionario _nuevoIntentoCuestionario, double _notaMaxima)
+        {
+            int contadorPreguntas = 0;
+            Cuestionario cuestionario = new Cuestionario().Obtener(_nuevoIntentoCuestionario.cuestionarioID);
+            using (IEnumerator<Pregunta> iteradorPregunta = cuestionario.Pregunta.GetEnumerator())
+            {
+                while (iteradorPregunta.MoveNext())
+                {
+                    Pregunta pregunta = iteradorPregunta.Current;
+                    var listaRespuesta = new Respuesta().ListarPorPregunta(pregunta.preguntaID, _nuevoIntentoCuestionario.intentoCuestionarioID);
+                    if (listaRespuesta != null && listaRespuesta.Count > 0)
+                    {
+                        contadorPreguntas++;
+                    }
+                }
+                return (_notaMaxima / contadorPreguntas);
+            }
         }
 
         /**
@@ -92,25 +147,33 @@ namespace RefuerzaUPT.Controllers
         public void GuardarRespuesta(IntentoCuestionario _nuevoIntentoCuestionario, string _guid)
         {
             string preguntaID = $"Pregunta[{_guid}].preguntaID";
-            List<string> alternativaIDsEnunciados = new List<string>();
-            alternativaIDsEnunciados.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].alternativaID"));
+            List<string> alternativaIDsRespuestas = new List<string>();
+            alternativaIDsRespuestas.AddRange(Request.Form.GetValues($"Pregunta[{_guid}].alternativaID"));
 
             List<string> respuestaCorrecta = Request.Form.GetValues($"Pregunta[{_guid}].respuestaCorrecta").ToList();
             for (int i = 0; i < respuestaCorrecta.Count; i++)
             {
+                alternativaIDsRespuestas.Add(respuestaCorrecta[i]);
                 if (respuestaCorrecta[i] == "true")
-                    alternativaIDsEnunciados.Add(respuestaCorrecta[i]);
+                    i++;
             }
-            Respuesta nuevaRespuesta = new Respuesta()
+
+            //lista unidimensional con id y respuesta
+            int n = 2;
+            for (int i = 0; i < (alternativaIDsRespuestas.Count / n); i++)
             {
-                cuestionarioID = _nuevoIntentoCuestionario.cuestionarioID,
-                intentoCuestionarioID = _nuevoIntentoCuestionario.intentoCuestionarioID,
-                preguntaID = Convert.ToInt32(Request.Form[preguntaID]),
-                alternativaID = 0,
-                usuarioID = _nuevoIntentoCuestionario.usuarioID,
-                estado = true
-            };
-            nuevaRespuesta.Guardar();
+                Respuesta nuevaRespuesta = new Respuesta()
+                {
+                    cuestionarioID = _nuevoIntentoCuestionario.cuestionarioID,
+                    intentoCuestionarioID = _nuevoIntentoCuestionario.intentoCuestionarioID,
+                    preguntaID = Convert.ToInt32(Request.Form[preguntaID]),
+                    alternativaID = Convert.ToInt32(alternativaIDsRespuestas[i]),
+                    alternativaRespuesta = Convert.ToBoolean(alternativaIDsRespuestas[(alternativaIDsRespuestas.Count / n) + i]),
+                    usuarioID = _nuevoIntentoCuestionario.usuarioID,
+                    estado = true
+                };
+                nuevaRespuesta.Guardar();
+            }
         }
 
         /**
@@ -123,16 +186,6 @@ namespace RefuerzaUPT.Controllers
             try
             {
                 _cuestionario.Guardar();
-                //int counterCuestionario = 0;
-                //using (IEnumerator<Pregunta> iteradorCuestionario = _cuestionario.Pregunta.GetEnumerator())
-                //{
-                //    while (iteradorCuestionario.MoveNext())
-                //    {
-                //        Pregunta actualPregunta = iteradorCuestionario.Current;
-                //        GuardarAlternativa(actualPregunta, guids[counterCuestionario]);
-                //        counterCuestionario++;
-                //    }
-                //}
                 foreach (string guid in guidPreguntas)
                 {
                     GuardarPregunta(_cuestionario, guid);
@@ -272,14 +325,14 @@ namespace RefuerzaUPT.Controllers
             }
             return Json("Eliminado");
         }
-
+        
         /**
         * 
         */
-        public ActionResult GuardarTemaEnSession(int _temaID)
+        public ActionResult GuardarTemporizadorEnSession(string _temporizador)
         {
-            Session["Tema"] = _temaID;
-            return Json("temaID: " + _temaID);
+            Session["Temporizador"] = _temporizador;
+            return Json("Temporizador: " + _temporizador);
         }
     }
 }

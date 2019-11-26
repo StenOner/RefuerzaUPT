@@ -34,35 +34,39 @@ else
     {
         <div id="Cuestionario">
             @Html.HiddenFor(m => m.cuestionarioID)
-            <div class="row">
-                <div class="col-sm-1">
-                    Tema
+            <div id="Cabecera">
+                <div class="row">
+                    <div class="col-sm-1">
+                        Tema
+                    </div>
+                    <div class="col">
+                        @Html.DropDownListFor(x => x.temaID, selectListTemas, " Seleccione un tema ", new { @class = "form-control", @required = "true", @onchange = "GuardarEnSession()" })
+                    </div>
                 </div>
-                <div class="col">
-                    @Html.DropDownListFor(x => x.temaID, selectListTemas, " Seleccione un tema ", new { @class = "form-control", @required = "true", @onchange = "GuardarEnSession()" })
+                <div class="row">
+                    <div class="col-sm-1">
+                        Duracion
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="duracion" name="duracion" value="@(Model.duracion > 0 ? Model.duracion : defaultDuracion)" min="10" max="180" required />
+                    </div>
                 </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-1">
-                    Duracion
-                </div>
-                <div class="col">
-                    <input type="number" class="form-control" id="duracion" name="duracion" value="@(Model.duracion > 0 ? Model.duracion : defaultDuracion)" min="10" max="180" required />
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-sm-1">
-                    Intentos
-                </div>
-                <div class="col">
-                    <input type="number" class="form-control" id="intentos" name="intentos" value="@(Model.intentos > 0 ? Model.intentos : defaultIntentos)" min="1" required />
+                <div class="row">
+                    <div class="col-sm-1">
+                        Intentos
+                    </div>
+                    <div class="col">
+                        <input type="number" class="form-control" id="intentos" name="intentos" value="@(Model.intentos > 0 ? Model.intentos : defaultIntentos)" min="1" required />
+                    </div>
                 </div>
             </div>
             <hr />
-            @foreach (var item in listaPreguntas)
-            {
-                @Html.Partial("_PreguntaCuestionario", item);
-            }
+            <div id="Preguntas">
+                @foreach (var item in listaPreguntas)
+                {
+                    @Html.Partial("_PreguntaCuestionario", item);
+                }
+            </div>
         </div>
     }
 
@@ -86,7 +90,8 @@ else
             async: true,
             url: url,
             success: function (response) {
-                document.getElementById('Cuestionario').innerHTML += response;
+                //document.getElementById('Preguntas').innerHTML += response;
+                document.getElementById('Preguntas').insertAdjacentHTML('beforeend', response);
             }
         });
         //$.post(url, function (response) {
@@ -147,7 +152,7 @@ else
             var child = parent.children[0];
             var alternativaID = _id.replace('Boton_', '').replace('preguntaID', 'alternativaID');
             var alternativaName = respuestaCorrectaID.replace('Pregunta_', 'Pregunta[').replace('__respuestaCorrecta', '].alternativaID');
-            child.innerHTML +=
+            child.insertAdjacentHTML('beforeend',
                 '<div class="input-group">' +
                 '<input type="hidden" id="' + alternativaID + '" name="' + alternativaName + '" value="0" />' +
                 '<div class="input-group-prepend">' +
@@ -157,7 +162,8 @@ else
                 '</div>' +
                 '</div>' +
                 '<input type="text" id="' + enunciadoAlternativaID + '" name="' + enunciadoAlternativaName + '" class="form-control" />' +
-                '</div>';
+                '</div>'
+            );
         };
 
         /**
@@ -190,24 +196,6 @@ else
          */
         function CambiarValor(_elemento) {
             _elemento.checked ? _elemento.value = "true" : _elemento.value = "false";
-        };
-
-        /**
-         *
-         *
-         */
-        function GuardarEnSession() {
-            var temaID = document.getElementById('temaID').value;
-            var url = '@Url.Action("GuardarTemaEnSession", "Cuestionario")';
-            $.ajax({
-                type: "POST",
-                async: true,
-                data: { _temaID: temaID },
-                url: url,
-                success: function (response) {
-                    console.log(response);
-                }
-            });
         };
     </script>
 }

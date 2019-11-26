@@ -19,7 +19,9 @@ namespace RefuerzaUPT.Models
 
         public int preguntaID { get; set; }
 
-        public int alternativaID { get; set; }
+        public int? alternativaID { get; set; }
+
+        public bool? alternativaRespuesta { get; set; }
 
         public int usuarioID { get; set; }
 
@@ -54,7 +56,7 @@ namespace RefuerzaUPT.Models
             return listaRespuesta;
         }
 
-        public List<Respuesta> ListarPorPregunta(int _id)
+        public List<Respuesta> ListarPorPregunta(int _idPregunta, int _idIntento)
         {
             var listaRespuesta = new List<Respuesta>();
             try
@@ -62,7 +64,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaRespuesta = db.Respuesta
-                        .Where(x => x.preguntaID == _id && x.estado == true)
+                        .Where(x => x.preguntaID == _idPregunta && x.intentoCuestionarioID == _idIntento && x.estado == true)
                         .ToList();
                 }
             }

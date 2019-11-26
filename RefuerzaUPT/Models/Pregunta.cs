@@ -52,6 +52,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaPregunta = db.Pregunta
+                        .Include("Alternativa")
                         .Where(x => x.cuestionarioID == _id && x.estado == true)
                         .ToList();
                 }
@@ -71,6 +72,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaPregunta = db.Pregunta
+                        .Include("Alternativa")
                         .Where(x => x.preguntaID == _id && x.estado == true)
                         .SingleOrDefault();
                 }

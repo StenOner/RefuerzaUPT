@@ -23,7 +23,7 @@ namespace RefuerzaUPT.Models
 
         public int usuarioID { get; set; }
 
-        public int nota { get; set; }
+        public double nota { get; set; }
 
         public int tiempoResolucion { get; set; }
 
@@ -44,6 +44,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
+                        .Include("Respuesta")
                         .Where(x => x.intentoCuestionarioID == _id && x.estado == true)
                         .ToList();
                 }
@@ -63,6 +64,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
+                        .Include("Respuesta")
                         .Where(x => x.cuestionarioID == _id && x.estado == true)
                         .ToList();
                 }
@@ -82,6 +84,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
+                        .Include("Respuesta")
                         .Where(x => x.usuarioID == _id && x.estado == true)
                         .ToList();
                 }
@@ -101,6 +104,7 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     objetoIntentoCuestionario = db.IntentoCuestionario
+                        .Include("Respuesta")
                         .Where(x => x.intentoCuestionarioID == _id && x.estado == true)
                         .SingleOrDefault();
                 }

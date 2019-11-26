@@ -10,22 +10,26 @@
 </div>
 @using (Html.BeginForm("GuardarIntento", "Cuestionario", FormMethod.Post, new { id = "frm-intento" }))
 {
-    @Html.HiddenFor(m => m.intentos)
-    @Html.HiddenFor(m => m.estado)
-    @Html.HiddenFor(m => m.temaID)
-    @Html.HiddenFor(m => m.duracion)
-    <input type="hidden" id="tiempoRestante" name="tiempoRestante" value="0" />
-    <h2>
-        <span id="contador" class="float-xl-right" style="color:red;margin-top:-50px;">00:00</span>
-        <span id="minutos" class="float-xl-right" style="color:red;margin-top:-50px;margin-right:-135px;">minutos</span>
-    </h2>
-    <hr />
     <div id="Cuestionario">
-        @Html.HiddenFor(m => m.cuestionarioID)
-        @foreach (var item in Model.Pregunta)
-        {
-            @Html.Partial("_PreguntaCuestionario", item);
-        }
+        <div id="Cabecera">
+            @Html.HiddenFor(m => m.intentos)
+            @Html.HiddenFor(m => m.estado)
+            @Html.HiddenFor(m => m.temaID)
+            @Html.HiddenFor(m => m.duracion)
+            @Html.HiddenFor(m => m.cuestionarioID)
+            <input type="hidden" id="tiempoRestante" name="tiempoRestante" value="0" />
+            <h2>
+                <span id="contador" class="float-xl-right" style="color:red;margin-top:-50px;">00:00</span>
+                <span id="minutos" class="float-xl-right" style="color:red;margin-top:-50px;margin-right:-135px;">minutos</span>
+            </h2>
+        </div>
+        <hr />
+        <div id="Preguntas">
+            @foreach (var item in Model.Pregunta)
+            {
+                @Html.Partial("_PreguntaCuestionario", item);
+            }
+        </div>
     </div>
     <div class="row float-right">
         <button id="GuardarIntento" type="button" class="btn btn-success" onclick="EnviarFormulario()">Enviar</button>
@@ -56,6 +60,7 @@
             } else {
                 console.log('Tiempo agotado');
                 clearInterval(interval);
+                EnviarFormulario();
             }
         }
         element.innerText = parts[0] + ":" + parts[1];

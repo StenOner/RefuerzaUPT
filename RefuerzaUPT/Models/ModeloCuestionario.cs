@@ -32,11 +32,6 @@ namespace RefuerzaUPT.Models
                 .Property(e => e.enunciadoAlternativa)
                 .IsUnicode(false);
 
-            modelBuilder.Entity<Alternativa>()
-                .HasMany(e => e.Respuesta)
-                .WithRequired(e => e.Alternativa)
-                .WillCascadeOnDelete(false);
-
             modelBuilder.Entity<Cuestionario>()
                 .HasMany(e => e.CuestionarioBloqueado)
                 .WithRequired(e => e.Cuestionario1)
