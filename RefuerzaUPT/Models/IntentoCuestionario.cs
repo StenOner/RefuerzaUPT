@@ -56,7 +56,7 @@ namespace RefuerzaUPT.Models
             return listaIntentoCuestionario;
         }
 
-        public List<IntentoCuestionario> ListarPorCuestionario(int _id)
+        public List<IntentoCuestionario> ListarPorCuestionarioUsuario(int _idCuestionario, int _idUsuario)
         {
             var listaIntentoCuestionario = new List<IntentoCuestionario>();
             try
@@ -65,7 +65,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
                         .Include("Respuesta")
-                        .Where(x => x.cuestionarioID == _id && x.estado == true)
+                        .Where(x => x.cuestionarioID == _idCuestionario && x.usuarioID == _idUsuario && x.estado == true)
                         .ToList();
                 }
             }

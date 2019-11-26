@@ -92,6 +92,7 @@ else
             </tr>
             @foreach (var item in Model)
             {
+                List<RefuerzaUPT.Models.IntentoCuestionario> intentoCuestionario = new RefuerzaUPT.Models.IntentoCuestionario().ListarPorCuestionarioUsuario(item.cuestionarioID, usuario.usuarioID);
                 if (item.Tema.cursoID == curso.cursoID)
                 {
                     <tr>
@@ -108,10 +109,32 @@ else
                             @Html.DisplayFor(modelItem => item.intentos)
                         </td>
                         <td>
-                            No intento
+                            @if (intentoCuestionario != null && intentoCuestionario.Count > 0)
+                            {
+                                double mayor = 0;
+                                foreach (var intento in intentoCuestionario)
+                                {
+                                    if (intento.nota > mayor)
+                                    {
+                                        mayor = intento.nota;
+                                    }
+                                }
+                                if (mayor >= 10.5)
+                                {
+                                    <span>Aprobado</span>
+                                }
+                                else
+                                {
+                                    <span>Desaprobado</span>
+                                }
+                            }
+                            else
+                            {
+                                <span>Sin intentar</span>
+                            }
                         </td>
                         <td>
-                            <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo Intento</a>
+                            <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo intento</a>
                         </td>
                     </tr>
                 }
