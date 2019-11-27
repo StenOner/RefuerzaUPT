@@ -280,6 +280,7 @@
     <Compile Include="Controllers\CuestionarioController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Filters\AdminFilters.cs" />
+    <Compile Include="Filters\RandomizerHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

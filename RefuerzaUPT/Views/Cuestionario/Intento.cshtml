@@ -25,7 +25,7 @@
         </div>
         <hr />
         <div id="Preguntas">
-            @foreach (var item in Model.Pregunta)
+            @foreach (RefuerzaUPT.Models.Pregunta item in ViewBag.listaPreguntas)
             {
                 @Html.Partial("_PreguntaCuestionario", item);
             }

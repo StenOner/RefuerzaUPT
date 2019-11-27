@@ -59,8 +59,23 @@ namespace RefuerzaUPT.Controllers
         public ActionResult Intento(int _id = 0)
         {
             if (_id == 0)
+            {
                 return Redirect("~/Cuestionario");
-            return View(objetoCuestionario.Obtener(_id));
+            }
+            else
+            {
+                Cuestionario cuestionario = new Cuestionario().Obtener(_id);
+                List<Pregunta> listaPreguntas = cuestionario.Pregunta.ToList();
+                listaPreguntas.Shuffle();
+                //usar el 80% de las preguntas
+                int cantidadPreguntas = (int)Math.Round(Convert.ToDouble(listaPreguntas.Count) * 0.80);
+                while (cantidadPreguntas < listaPreguntas.Count)
+                {
+                    listaPreguntas.RemoveAt(0);
+                }
+                ViewBag.listaPreguntas = listaPreguntas;
+                return View(cuestionario);
+            }
         }
 
         /**

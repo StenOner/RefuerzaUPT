@@ -39,16 +39,16 @@
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.cuestionarioID)
+                            @item.cuestionarioID
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Tema.nombre)
+                            @item.Tema.nombre
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.duracion)
+                            @item.duracion
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.intentos)
+                            @item.intentos
                         </td>
                         <td>
                             <a class="btn btn-outline-info" href="~/Cuestionario/Ver?_id=@item.cuestionarioID">Ver</a>
@@ -63,7 +63,6 @@
 }
 else
 {
-    <span>no eres prosor</span>
     foreach (var curso in ViewBag.cursos)
     {
         <h3>
@@ -87,31 +86,35 @@ else
                     Estado
                 </th>
                 <th>
+                    Intentos
+                </th>
+                <th>
                     Acciones
                 </th>
             </tr>
             @foreach (var item in Model)
             {
+                double mayor = 0;
                 List<RefuerzaUPT.Models.IntentoCuestionario> intentoCuestionario = new RefuerzaUPT.Models.IntentoCuestionario().ListarPorCuestionarioUsuario(item.cuestionarioID, usuario.usuarioID);
                 if (item.Tema.cursoID == curso.cursoID)
                 {
                     <tr>
                         <td>
-                            @Html.DisplayFor(modelItem => item.cuestionarioID)
+                            @item.cuestionarioID
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Tema.nombre)
+                            @item.Tema.nombre
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.duracion)
+                            @item.duracion
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.intentos)
+                            @intentoCuestionario.Count/@item.intentos 
                         </td>
                         <td>
                             @if (intentoCuestionario != null && intentoCuestionario.Count > 0)
                             {
-                                double mayor = 0;
+                                mayor = 0;
                                 foreach (var intento in intentoCuestionario)
                                 {
                                     if (intento.nota > mayor)
@@ -121,20 +124,40 @@ else
                                 }
                                 if (mayor >= 10.5)
                                 {
-                                    <span>Aprobado</span>
+                                    <span style="color:lawngreen">Aprobado</span>
                                 }
                                 else
                                 {
-                                    <span>Desaprobado</span>
+                                    <span style="color:orangered">Desaprobado</span>
                                 }
                             }
                             else
                             {
-                                <span>Sin intentar</span>
+                                <span style="color:ivory">Sin intentar</span>
                             }
                         </td>
                         <td>
-                            <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo intento</a>
+                            @foreach (var intento in intentoCuestionario)
+                            {
+                                <a href="javascript:void(0)">@intento.intentoCuestionarioID</a>
+                            }
+                        </td>
+                        <td>
+                            @if (intentoCuestionario.Count < item.intentos)
+                            {
+                                <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo intento</a>
+                            }
+                            else
+                            {
+                                if (mayor >= 10.5)
+                                {
+                                    <a class="btn btn-outline-info" href="javascript:void(0)">Imprimir</a>
+                                }
+                                else
+                                {
+                                    <a class="btn btn-outline-light" href="javascript:void(0)">Sin intentos</a>
+                                }
+                            }
                         </td>
                     </tr>
                 }
