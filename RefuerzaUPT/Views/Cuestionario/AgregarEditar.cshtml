@@ -14,6 +14,20 @@
         listaPreguntas = new RefuerzaUPT.Models.Pregunta().ListarPorCuestionario(Model.cuestionarioID);
     }
     catch (Exception) { }
+    List<SelectListItem> selectListCuestionarios = new List<SelectListItem>();
+    List<RefuerzaUPT.Models.Cuestionario> listaCuestionarios = new List<RefuerzaUPT.Models.Cuestionario>();
+    try
+    {
+        listaCuestionarios = new RefuerzaUPT.Models.Cuestionario().ListarPorCurso(Model.Tema.cursoID);
+        foreach (var cuestionario in listaCuestionarios)
+        {
+            if (cuestionario.cuestionarioID != Model.cuestionarioID)
+            {
+                selectListCuestionarios.Add(new SelectListItem() { Text = cuestionario.cuestionarioID + " - " + cuestionario.Tema.nombre, Value = cuestionario.cuestionarioID.ToString() });
+            }
+        }
+    }
+    catch (Exception) { }
 }
 @if (Model == null)
 {
@@ -34,13 +48,21 @@ else
     {
         <div id="Cuestionario">
             @Html.HiddenFor(m => m.cuestionarioID)
+            <div class="row">
+                <div class="col-sm-1">
+                    Desbloquear
+                </div>
+                <div class="col">
+                    @Html.DropDownList("cuestionarioBloquearID", selectListCuestionarios, " Seleccione el cuestionario requerido para desbloquear ", new { @class = "form-control" })
+                </div>
+            </div>
             <div id="Cabecera">
                 <div class="row">
                     <div class="col-sm-1">
                         Tema
                     </div>
                     <div class="col">
-                        @Html.DropDownListFor(x => x.temaID, selectListTemas, " Seleccione un tema ", new { @class = "form-control", @required = "true", @onchange = "GuardarEnSession()" })
+                        @Html.DropDownListFor(x => x.temaID, selectListTemas, " Seleccione un tema ", new { @class = "form-control", @required = "true" })
                     </div>
                 </div>
                 <div class="row">

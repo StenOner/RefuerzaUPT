@@ -8,6 +8,7 @@ namespace RefuerzaUPT.Filters
     public static class RandomizerHelper
     {
         private static Random rng = new Random();
+
         /**
          * funcion para randomizar los valores de una lista
          * mas informacion: https://stackoverflow.com/questions/273313/randomize-a-listt

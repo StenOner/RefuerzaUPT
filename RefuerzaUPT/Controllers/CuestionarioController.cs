@@ -130,7 +130,7 @@ namespace RefuerzaUPT.Controllers
                 }
             }
             if (nota < 0)
-                nota = 0;
+                return 0;
             return Math.Round(nota, 2);
         }
 

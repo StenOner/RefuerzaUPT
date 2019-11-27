@@ -143,7 +143,7 @@ else
                             }
                         </td>
                         <td>
-                            @if (intentoCuestionario.Count < item.intentos)
+                            @if (intentoCuestionario.Count < item.intentos && mayor < 10.5)
                             {
                                 <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo intento</a>
                             }
