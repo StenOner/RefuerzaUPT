@@ -327,6 +327,7 @@
     <Content Include="Views\Shared\EditorTemplates\Collection.cshtml" />
     <Content Include="Views\Cuestionario\Index.cshtml" />
     <Content Include="Views\Cuestionario\Intento.cshtml" />
+    <Content Include="Views\Cuestionario\VerIntento.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

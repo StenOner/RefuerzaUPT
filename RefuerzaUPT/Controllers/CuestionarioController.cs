@@ -34,6 +34,14 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
+        public ActionResult VerIntento(int _id = 0)
+        {
+            return View(new IntentoCuestionario().Obtener(_id));
+        }
+
+        /**
+         * 
+         */
         public ActionResult ResolverCuestionario(int _id)
         {
             return View(objetoCuestionario.Obtener(_id));

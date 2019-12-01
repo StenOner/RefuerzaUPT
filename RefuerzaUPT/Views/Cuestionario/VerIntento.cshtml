@@ -1,0 +1,80 @@
+﻿@model RefuerzaUPT.Models.IntentoCuestionario
+@{
+    ViewBag.Title = "Ver Intento";
+    RefuerzaUPT.Models.Cuestionario cuestionario = new RefuerzaUPT.Models.Cuestionario();
+    try
+    {
+        cuestionario = new RefuerzaUPT.Models.Cuestionario().Obtener(Model.cuestionarioID);
+    }
+    catch (Exception) { }
+}
+@if (Model == null)
+{
+    <div class="text-center">
+        <h1>
+            No se encontro el intento
+        </h1>
+    </div>
+}
+else
+{
+    <div class="text-center">
+        <h1>
+            @cuestionario.Tema.Curso.nombre - @cuestionario.Tema.nombre
+        </h1>
+    </div>
+    <h2>
+        <span id="contador" class="float-xl-right" style="color:red;margin-top:-40px;">Resuelto en: @Model.tiempoResolucion:00 @(Model.tiempoResolucion == 1 ? "minuto" : "minutos")</span>
+    </h2>
+    <h2>
+        <span id="nota" class="float-xl-left" style="color:red;margin-top:-40px;">Nota: @Model.nota</span>
+    </h2>
+    <hr />
+    <div id="Intento">
+        @{
+            var respuestas = Model.Respuesta.GetEnumerator();
+            var counter = 1;
+            var preguntaID = 0;
+        }
+        @while (respuestas.MoveNext())
+        {
+            var respuesta = respuestas.Current;
+            var actualPreguntaID = respuesta.preguntaID;
+            if (counter == 1)
+            {
+                preguntaID = respuesta.preguntaID;
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @counter. @respuesta.Pregunta.enunciadoPregunta
+                    </h3>
+                </div>
+                { counter++; }
+            }
+            if (preguntaID != actualPreguntaID)
+            {
+                preguntaID = respuesta.preguntaID;
+                <hr />
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        @counter. @respuesta.Pregunta.enunciadoPregunta
+                    </h3>
+                </div>
+                { counter++; }
+            }
+            else
+            {
+                <div class="panel-body">
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">
+                                <input type="checkbox" @((bool)respuesta.alternativaRespuesta ? "checked" : "") disabled />
+                            </div>
+                        </div>
+                        @respuesta.Alternativa.enunciadoAlternativa&nbsp;&nbsp;&nbsp;&nbsp;
+                        <span style="color:red;">@((bool)respuesta.alternativaRespuesta == respuesta.Alternativa.respuestaCorrecta ? "✓" : "X")</span>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+}

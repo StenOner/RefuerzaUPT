@@ -104,7 +104,10 @@ namespace RefuerzaUPT.Models
                 using (var db = new ModeloCuestionario())
                 {
                     objetoIntentoCuestionario = db.IntentoCuestionario
+                        .Include("Cuestionario")
                         .Include("Respuesta")
+                        .Include("Respuesta.Pregunta")
+                        .Include("Respuesta.Alternativa")
                         .Where(x => x.intentoCuestionarioID == _id && x.estado == true)
                         .SingleOrDefault();
                 }
