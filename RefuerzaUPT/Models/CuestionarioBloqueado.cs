@@ -21,23 +21,26 @@ namespace RefuerzaUPT.Models
 
         public virtual Cuestionario Cuestionario2 { get; set; }
 
-        public List<CuestionarioBloqueado> ListarPorCuestionarioDesbloquear(int _id)
+        public CuestionarioBloqueado ObtenerCuestionarioDesbloquear(int _id)
         {
-            var listaCuestionarioBloqueado = new List<CuestionarioBloqueado>();
+            var cuestionarioBloqueado = new CuestionarioBloqueado();
             try
             {
                 using (var db = new ModeloCuestionario())
                 {
-                    listaCuestionarioBloqueado = db.CuestionarioBloqueado
+                    cuestionarioBloqueado = db.CuestionarioBloqueado
                         .Where(x => x.cuestionarioDesbloquearID == _id)
-                        .ToList();
+                        .SingleOrDefault();
                 }
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
             }
-            return listaCuestionarioBloqueado;
+            if (cuestionarioBloqueado == null)
+                return new CuestionarioBloqueado();
+            else
+                return cuestionarioBloqueado;
         }
 
         public CuestionarioBloqueado Obtener(int _id)

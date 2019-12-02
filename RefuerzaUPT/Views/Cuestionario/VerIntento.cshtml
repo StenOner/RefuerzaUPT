@@ -24,7 +24,7 @@ else
         </h1>
     </div>
     <h2>
-        <span id="contador" class="float-xl-right" style="color:red;margin-top:-40px;">Resuelto en: @Model.tiempoResolucion:00 @(Model.tiempoResolucion == 1 ? "minuto" : "minutos")</span>
+        <span id="contador" class="float-xl-right" style="color:red;margin-top:-40px;margin-right:-135px;">Resuelto en: @Model.tiempoResolucion:00 @(Model.tiempoResolucion == 1 ? "minuto" : "minutos")</span>
     </h2>
     <h2>
         <span id="nota" class="float-xl-left" style="color:red;margin-top:-40px;">Nota: @Model.nota</span>
@@ -61,20 +61,17 @@ else
                 </div>
                 { counter++; }
             }
-            else
-            {
-                <div class="panel-body">
-                    <div class="input-group">
-                        <div class="input-group-prepend">
-                            <div class="input-group-text">
-                                <input type="checkbox" @((bool)respuesta.alternativaRespuesta ? "checked" : "") disabled />
-                            </div>
+            <div class="panel-body">
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">
+                            <input type="checkbox" @((bool)respuesta.alternativaRespuesta ? "checked" : "") disabled />
                         </div>
-                        @respuesta.Alternativa.enunciadoAlternativa&nbsp;&nbsp;&nbsp;&nbsp;
-                        <span style="color:red;">@((bool)respuesta.alternativaRespuesta == respuesta.Alternativa.respuestaCorrecta ? "✓" : "X")</span>
                     </div>
+                    @respuesta.Alternativa.enunciadoAlternativa&nbsp;&nbsp;&nbsp;&nbsp;
+                    <span style="color:red;">@((bool)respuesta.alternativaRespuesta == respuesta.Alternativa.respuestaCorrecta ? "✓" : "X")</span>
                 </div>
-            }
+            </div>
         }
     </div>
 }

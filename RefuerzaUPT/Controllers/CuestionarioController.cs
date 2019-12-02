@@ -26,6 +26,14 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
+        public ActionResult Ranking()
+        {
+            return View(new IntentoCuestionario().Listar());
+        }
+
+        /**
+         * 
+         */
         public ActionResult Ver(int _id = 0)
         {
             return View(objetoCuestionario.Obtener(_id));
@@ -145,7 +153,7 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
-        private double CalcularPuntajePregunta(IntentoCuestionario _nuevoIntentoCuestionario, double _notaMaxima)
+        public double CalcularPuntajePregunta(IntentoCuestionario _nuevoIntentoCuestionario, double _notaMaxima)
         {
             int contadorPreguntas = 0;
             Cuestionario cuestionario = new Cuestionario().Obtener(_nuevoIntentoCuestionario.cuestionarioID);
@@ -202,6 +210,27 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
+        public void BloquearCuestionario(int _cuestionarioDesbloquearID, int _cuestionarioRequeridoID)
+        {
+            CuestionarioBloqueado cuestionarioBloqueado = new CuestionarioBloqueado().ObtenerCuestionarioDesbloquear(_cuestionarioDesbloquearID);
+            cuestionarioBloqueado.cuestionarioDesbloquearID = _cuestionarioDesbloquearID;
+            cuestionarioBloqueado.cuestionarioRequeridoID = _cuestionarioRequeridoID;
+            cuestionarioBloqueado.Guardar();
+        }
+
+        /**
+         * 
+         */
+        public void EliminarBloquearCuestionario(int _cuestionarioDesbloquearID)
+        {
+            CuestionarioBloqueado cuestionarioBloqueado = new CuestionarioBloqueado().ObtenerCuestionarioDesbloquear(_cuestionarioDesbloquearID);
+            if (cuestionarioBloqueado.cuestionarioBloqueadoID > 0)
+                cuestionarioBloqueado.Eliminar();               
+        }
+
+        /**
+         * 
+         */
         public ActionResult Guardar([Bind(Exclude = "Pregunta")]Cuestionario _cuestionario)
         {
             _cuestionario.estado = true;
@@ -209,6 +238,13 @@ namespace RefuerzaUPT.Controllers
             try
             {
                 _cuestionario.Guardar();
+                if (!string.IsNullOrEmpty(Request.Form["cuestionarioRequeridoID"]))
+                {
+                    if (Request.Form["cuestionarioRequeridoID"].Equals("0"))
+                        EliminarBloquearCuestionario(_cuestionario.cuestionarioID);
+                    else
+                        BloquearCuestionario(_cuestionario.cuestionarioID, Convert.ToInt32(Request.Form["cuestionarioRequeridoID"]));
+                }
                 foreach (string guid in guidPreguntas)
                 {
                     GuardarPregunta(_cuestionario, guid);
@@ -224,7 +260,7 @@ namespace RefuerzaUPT.Controllers
         /**
          * 
          */
-        private void GuardarPregunta(Cuestionario _cuestionario, string _guid)
+        public void GuardarPregunta(Cuestionario _cuestionario, string _guid)
         {
             string preguntaID = $"Pregunta[{_guid}].preguntaID";
             string tipoPreguntaID = $"Pregunta[{_guid}].tipoPreguntaID";

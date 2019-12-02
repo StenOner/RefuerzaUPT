@@ -1,0 +1,90 @@
+﻿@model IEnumerable<RefuerzaUPT.Models.IntentoCuestionario>
+@{
+    ViewBag.Title = "Ranking";
+    int tipoUsuarioAlumno = 2;    
+    List<RefuerzaUPT.Models.Curso> cursos = new RefuerzaUPT.Models.Curso().Listar();
+    List<List<RefuerzaUPT.Models.Tema>> temas = new List<List<RefuerzaUPT.Models.Tema>>();
+    foreach (var curso in cursos)
+    {
+        temas.Add(new RefuerzaUPT.Models.Tema().ListarporCurso(curso.cursoID));
+    }
+}
+<div class="text-center">
+    <h2>Ranking</h2>
+</div>
+
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        @{ int activeIfZero = 0; }
+        @foreach (var curso in cursos)
+        {
+            <a class="nav-item nav-link @(activeIfZero == 0 ? "active" : "")" id="nav-@curso.cursoID-tab" data-toggle="tab" href="#nav-@curso.cursoID" role="tab" aria-controls="nav-@curso.cursoID" aria-selected="@(activeIfZero == 0 ? "true" : "false")">
+                @curso.nombre
+            </a>
+            activeIfZero++;
+        }
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    @{ int counterTemas = 0; }
+    @foreach (var curso in cursos)
+    {
+        <div class="tab-pane fade @(counterTemas == 0 ? "show active" : "")" id="nav-@curso.cursoID" role="tabpanel" aria-labelledby="nav-@curso.cursoID-tab">
+            <table class="table">
+                @foreach (var tema in temas[counterTemas])
+                {
+                    <tr>
+                        <th>@tema.nombre</th>
+                    </tr>
+                    List<RefuerzaUPT.Models.IntentoCuestionario> mejoresIntentoCuestionario = new List<RefuerzaUPT.Models.IntentoCuestionario>();
+                    List<RefuerzaUPT.Models.Usuario> usuarios = new RefuerzaUPT.Models.Usuario().ListarTipoUsuario(tipoUsuarioAlumno);
+                    foreach (var usuario in usuarios)
+                    {
+                        List<RefuerzaUPT.Models.IntentoCuestionario> intentos = new RefuerzaUPT.Models.IntentoCuestionario().ListarPorTemaUsuario(tema.temaID, usuario.usuarioID);
+                        double notaAlta = 0;
+                        RefuerzaUPT.Models.IntentoCuestionario mejorIntento = new RefuerzaUPT.Models.IntentoCuestionario();
+                        foreach (var intento in intentos)
+                        {
+                            if (intento.nota >= notaAlta)
+                            {
+                                notaAlta = intento.nota;
+                                mejorIntento = intento;
+                            }
+                        }
+                        if (mejorIntento.Cuestionario != null)
+                        {
+                            mejoresIntentoCuestionario.Add(mejorIntento);
+                        }                        
+                    }
+                    int puesto = 1;
+                    mejoresIntentoCuestionario = mejoresIntentoCuestionario.OrderByDescending(x => x.nota).ToList();
+                    foreach (var mejorIntento in mejoresIntentoCuestionario)
+                    {
+                        <tr>
+                            <td>
+                                @if (puesto <= 3)
+                                {
+                                    <span style="display:inline-block;width:100px;">
+                                        <img width="30" height="30" src="~/Assets/images/medals/@(puesto).png" />
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span style="font-size:28px;display:inline-block;width:100px;">@puesto</span>
+                                }
+                                <span style="display:inline-block;width:200px;">
+                                    @mejorIntento.Usuario.nombre
+                                </span>
+                                <span style="display:inline-block;width:100px;color:@(mejorIntento.nota < 10.5 ? "red" : "lawngreen");">
+                                    @mejorIntento.nota
+                                </span>                                
+                            </td>
+                        </tr>
+                        puesto++;
+                    }
+                }
+            </table>
+        </div>
+        counterTemas++;
+    }
+</div>

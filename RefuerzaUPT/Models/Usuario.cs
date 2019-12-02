@@ -55,10 +55,25 @@ namespace RefuerzaUPT.Models
 
         public virtual TipoUsuario TipoUsuario { get; set; }
 
-        /**
-         * 
-         * 
-         */
+        public List<Usuario> ListarTipoUsuario(int _id)
+        {
+            var listaUsuario = new List<Usuario>();
+            try
+            {
+                using (var db = new ModeloCuestionario())
+                {
+                    listaUsuario = db.Usuario
+                        .Where(x => x.tipoUsuarioID == _id && x.estado == true)
+                        .ToList();
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
+            return listaUsuario;
+        }
+
         public Usuario Obtener(int _id) //retorna un objeto
         {
             var objetoUsuario = new Usuario();
@@ -78,11 +93,6 @@ namespace RefuerzaUPT.Models
             return objetoUsuario;
         }
 
-        /**
-         * 
-         * 
-         * 
-         */
         public ResponseModel ValidarLogin(string _correo, string _clave)
         {
             var rm = new ResponseModel();

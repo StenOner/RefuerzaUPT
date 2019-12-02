@@ -95,7 +95,7 @@ else
             @foreach (var item in Model)
             {
                 double mayor = 0;
-                List<RefuerzaUPT.Models.IntentoCuestionario> intentoCuestionario = new RefuerzaUPT.Models.IntentoCuestionario().ListarPorCuestionarioUsuario(item.cuestionarioID, usuario.usuarioID);
+                List<RefuerzaUPT.Models.IntentoCuestionario> intentosCuestionario = new RefuerzaUPT.Models.IntentoCuestionario().ListarPorCuestionarioUsuario(item.cuestionarioID, usuario.usuarioID);
                 if (item.Tema.cursoID == curso.cursoID)
                 {
                     <tr>
@@ -109,13 +109,13 @@ else
                             @item.duracion
                         </td>
                         <td>
-                            @intentoCuestionario.Count/@item.intentos 
+                            @intentosCuestionario.Count/@item.intentos 
                         </td>
                         <td>
-                            @if (intentoCuestionario != null && intentoCuestionario.Count > 0)
+                            @if (intentosCuestionario != null && intentosCuestionario.Count > 0)
                             {
                                 mayor = 0;
-                                foreach (var intento in intentoCuestionario)
+                                foreach (var intento in intentosCuestionario)
                                 {
                                     if (intento.nota > mayor)
                                     {
@@ -137,25 +137,53 @@ else
                             }
                         </td>
                         <td>
-                            @foreach (var intento in intentoCuestionario)
+                            @foreach (var intento in intentosCuestionario)
                             {
                                 <a href="~/Cuestionario/VerIntento?_id=@intento.intentoCuestionarioID">@intento.intentoCuestionarioID</a>
                             }
                         </td>
                         <td>
-                            @if (intentoCuestionario.Count < item.intentos && mayor < 10.5)
+                            @{
+                                double desbloquearAprobado = 0;
+                                RefuerzaUPT.Models.CuestionarioBloqueado cuestionarioBloqueado = new RefuerzaUPT.Models.CuestionarioBloqueado().ObtenerCuestionarioDesbloquear(item.cuestionarioID);
+                                if (cuestionarioBloqueado.cuestionarioBloqueadoID > 0)
+                                {
+                                    List<RefuerzaUPT.Models.IntentoCuestionario> intentoCuestionario = new RefuerzaUPT.Models.IntentoCuestionario().ListarPorCuestionarioUsuario(cuestionarioBloqueado.cuestionarioRequeridoID, usuario.usuarioID);
+                                    if (intentoCuestionario != null && intentoCuestionario.Count > 0)
+                                    {
+                                        desbloquearAprobado = 0;
+                                        foreach (var intento in intentoCuestionario)
+                                        {
+                                            if (intento.nota > desbloquearAprobado)
+                                            {
+                                                desbloquearAprobado = intento.nota;
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            @if (cuestionarioBloqueado.cuestionarioBloqueadoID > 0 && desbloquearAprobado < 10.5 && mayor < 10.5)
                             {
-                                <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo intento</a>
+                                <button type="button" class="btn btn-outline-warning" data-toggle="tooltip" data-placement="top" title="Para desbloquear este cuestionario necesitas aprobar el cuestionario #@(cuestionarioBloqueado.cuestionarioRequeridoID).">
+                                    Bloqueado
+                                </button>
                             }
                             else
                             {
-                                if (mayor >= 10.5)
+                                if (intentosCuestionario.Count < item.intentos && mayor < 10.5)
                                 {
-                                    <a class="btn btn-outline-info" href="javascript:void(0)">Imprimir</a>
+                                    <a class="btn btn-outline-success" onclick="return ConfirmarNuevoIntento()" href="~/Cuestionario/Intento?_id=@item.cuestionarioID">Nuevo intento</a>
                                 }
                                 else
                                 {
-                                    <a class="btn btn-outline-light" href="javascript:void(0)">Sin intentos</a>
+                                    if (mayor >= 10.5)
+                                    {
+                                        <a class="btn btn-outline-info" href="javascript:void(0)">Imprimir</a>
+                                    }
+                                    else
+                                    {
+                                        <a class="btn btn-outline-light" href="javascript:void(0)">Sin intentos</a>
+                                    }
                                 }
                             }
                         </td>

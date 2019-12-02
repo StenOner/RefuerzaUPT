@@ -36,7 +36,7 @@ namespace RefuerzaUPT.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Respuesta> Respuesta { get; set; }
 
-        public List<IntentoCuestionario> Listar(int _id)
+        public List<IntentoCuestionario> Listar()
         {
             var listaIntentoCuestionario = new List<IntentoCuestionario>();
             try
@@ -45,7 +45,7 @@ namespace RefuerzaUPT.Models
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
                         .Include("Respuesta")
-                        .Where(x => x.intentoCuestionarioID == _id && x.estado == true)
+                        .Where(x => x.estado == true)
                         .ToList();
                 }
             }
@@ -76,7 +76,7 @@ namespace RefuerzaUPT.Models
             return listaIntentoCuestionario;
         }
 
-        public List<IntentoCuestionario> ListarPorUsuario(int _id)
+        public List<IntentoCuestionario> ListarPorTemaUsuario(int _idTema, int _idUsuario)
         {
             var listaIntentoCuestionario = new List<IntentoCuestionario>();
             try
@@ -85,7 +85,9 @@ namespace RefuerzaUPT.Models
                 {
                     listaIntentoCuestionario = db.IntentoCuestionario
                         .Include("Respuesta")
-                        .Where(x => x.usuarioID == _id && x.estado == true)
+                        .Include("Cuestionario")
+                        .Include("Usuario")
+                        .Where(x => x.Cuestionario.temaID == _idTema && x.usuarioID == _idUsuario && x.estado == true)
                         .ToList();
                 }
             }

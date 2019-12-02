@@ -128,6 +128,9 @@
     <Content Include="Assets\images\logo\twitter_header_photo_2.png" />
     <Content Include="Assets\images\logo\twitter_profile_image.png" />
     <Content Include="Assets\images\logo\youtube_profile_image.png" />
+    <Content Include="Assets\images\medals\1.png" />
+    <Content Include="Assets\images\medals\2.png" />
+    <Content Include="Assets\images\medals\3.png" />
     <Content Include="Assets\js\main.js" />
     <Content Include="Assets\vendor\animate\animate.css" />
     <Content Include="Assets\vendor\animsition\css\animsition.css" />
@@ -328,6 +331,7 @@
     <Content Include="Views\Cuestionario\Index.cshtml" />
     <Content Include="Views\Cuestionario\Intento.cshtml" />
     <Content Include="Views\Cuestionario\VerIntento.cshtml" />
+    <Content Include="Views\Cuestionario\Ranking.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

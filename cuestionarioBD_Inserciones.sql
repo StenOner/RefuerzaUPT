@@ -39,7 +39,6 @@ INSERT INTO Tema VALUES
 (4, 'Tema Inteligencia 2', 1);
 GO
 INSERT INTO Cuestionario VALUES
-(1, 60, 3, 1),
 (1, 60, 3, 1);
 GO
 INSERT INTO Pregunta VALUES 
