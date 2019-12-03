@@ -141,6 +141,10 @@ else
                             {
                                 <a href="~/Cuestionario/VerIntento?_id=@intento.intentoCuestionarioID">@intento.intentoCuestionarioID</a>
                             }
+                            @if (intentosCuestionario.Count < 1)
+                            {
+                                <span> - </span>
+                            }
                         </td>
                         <td>
                             @{

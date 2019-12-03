@@ -54,23 +54,26 @@ else
     {
     <div id="Cuestionario">
         @Html.HiddenFor(m => m.cuestionarioID)
-        <div class="row">
-            <div class="col-sm-1">
-                Desbloquear
-            </div>
-            <div class="col">
-                <select id="cuestionarioRequeridoID" name="cuestionarioRequeridoID" class="form-control">
-                    <option value="0" selected>Seleccione el cuestionario requerido para desbloquear</option>
-                    @foreach (var cuestionario in listaCuestionarios)
-                    {
-                        if (cuestionario.cuestionarioID != Model.cuestionarioID)
+        @if (Model.cuestionarioID > 0)
+        {
+            <div class="row">
+                <div class="col-sm-1">
+                    Desbloquear
+                </div>
+                <div class="col">
+                    <select id="cuestionarioRequeridoID" name="cuestionarioRequeridoID" class="form-control">
+                        <option value="0" selected>Seleccione el cuestionario requerido para desbloquear</option>
+                        @foreach (var cuestionario in listaCuestionarios)
                         {
-                            <option value="@cuestionario.cuestionarioID" @(cuestionario.cuestionarioID == cuestionarioBloqueado.cuestionarioRequeridoID ? "selected" : "")>@cuestionario.cuestionarioID - @cuestionario.Tema.nombre</option>
+                            if (cuestionario.cuestionarioID != Model.cuestionarioID)
+                            {
+                                <option value="@cuestionario.cuestionarioID" @(cuestionario.cuestionarioID == cuestionarioBloqueado.cuestionarioRequeridoID ? "selected" : "")>@cuestionario.cuestionarioID - @cuestionario.Tema.nombre</option>
+                            }
                         }
-                    }
-                </select>
+                    </select>
+                </div>
             </div>
-        </div>
+        }
         <div id="Cabecera">
             <div class="row">
                 <div class="col-sm-1">
