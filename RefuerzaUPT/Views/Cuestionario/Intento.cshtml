@@ -18,10 +18,14 @@
             @Html.HiddenFor(m => m.duracion)
             @Html.HiddenFor(m => m.cuestionarioID)
             <input type="hidden" id="tiempoRestante" name="tiempoRestante" value="0" />
-            <h2>
-                <span id="contador" class="float-xl-right" style="color:red;margin-top:-50px;">00:00</span>
-                <span id="minutos" class="float-xl-right" style="color:red;margin-top:-50px;margin-right:-135px;">minutos</span>
-            </h2>
+            <div class="card-body">
+
+
+                <h2>
+                    <span id="contador" class="card-title" style="color:mediumturquoise;margin-top:-50px;">00:00</span>
+                    <span id="minutos" class="card-subtitle" style="color:mediumturquoise;margin-top:-50px;margin-right:-135px;">minutos</span>
+                </h2>
+            </div>
         </div>
         <hr />
         <div id="Preguntas">

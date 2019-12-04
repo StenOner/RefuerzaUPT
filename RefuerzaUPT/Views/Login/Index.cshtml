@@ -3,28 +3,31 @@
 }
 @using (Html.BeginForm("Validar", "Login", FormMethod.Post, new { @class = "login100-fom validate-form" }))
 {
-    <span class="login100-form-logo">
-        <i class="zmdi zmdi-landscape"></i>
-    </span>
 
-    <span class="login100-form-title p-b-34 p-t-27">
-        Log in
-    </span>
+    <div class="jumbotron">
 
-    <div class="wrap-input100 validate-input" data-validate="Enter email">
-        <input class="input100" type="email" name="_correo" placeholder="Correo" />
-        <span class="focus-input100" data-placeholder="&#xf207;"></span>
+        <div class="logologin">
+          <img src="~/Assets/images/logorefuerza1.png"  width="200" height="100"    />
+  
+        </div>
+
+
+
+        <div class="wrap-input100 validate-input " data-validate="Enter email">
+            <label  for="exampleInputEmail1" class="login">Email</label>
+            <input type="email" class="form-control" name="_correo" aria-describedby="emailHelp" placeholder="Correo">
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Enter password">
+            <label class="login" for="exampleInputPassword1">Clave</label>
+            <input type="password" class="form-control" name="_clave" placeholder="Clave">
+        </div>
+
+        <div class="container-login100-form-btn">
+
+            <button data-ajax="true" type="submit" class="btn btn-success">Ingresar</button>
+        </div>
     </div>
 
-    <div class="wrap-input100 validate-input" data-validate="Enter password">
-        <input class="input100" type="password" name="_clave" placeholder="Clave" />
-        <span class="focus-input100" data-placeholder="&#xf191;"></span>
-    </div>
-
-    <div class="container-login100-form-btn">
-        <button data-ajax="true" type="submit" class="login100-form-btn">
-            Ingresar
-        </button>
-    </div>
-}
-<div id="dropDownSelect1"></div>
+        }
+        <div id="dropDownSelect1"></div>

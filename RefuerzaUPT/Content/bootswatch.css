@@ -10723,7 +10723,7 @@ label,
 .nav-tabs .nav-link:hover,
 .nav-pills .nav-link,
 .nav-pills .nav-link:hover {
-  color: #EBEBEB;
+    color: #18bc9c;
 }
 
 .nav-tabs .nav-link.disabled,
